@@ -5,6 +5,7 @@ export default class AppContainer extends Container {
     userSignIn: true,
     notification: false,
     popup: false,
+    menu: false,
   };
 
   showPopup = () => {
@@ -14,4 +15,12 @@ export default class AppContainer extends Container {
   closePopup = () => {
     this.setState({ popup: false })
   };
+
+  showMenu = () => {
+    this.setState({ menu: true })
+  }
+
+  closeMenu = () => {
+    this.setState({ menu: false })
+  }
 }

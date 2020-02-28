@@ -1,0 +1,53 @@
+.menu {
+  position: relative;
+
+  &__screen {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  &__nav {
+    width: 300px;
+    position: absolute;
+    top: 3px;
+    right: 0;
+    z-index: 1500;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+  }
+
+  &__cell {
+    list-style: none;
+    padding: 15px 20px;
+    font-size: 1.3rem;
+    color: rgba(0, 0, 0, 0.75);
+    cursor: pointer;
+    transition: .1s;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+  }
+
+  &__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &__publisher {
+    font-weight: bolder;
+  }
+
+  &__time {
+    display: inline-block;
+    margin: 10px 0 0;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.5);
+  }
+}

@@ -91,7 +91,7 @@ function CellForUser() {
             { app.state.popup && <Popup />}
           </li>
           <li className='header__cell'>
-            <Link to='/notification' className='header__link-notification'>
+            <Link to='/notification' className='header__link-notification' onClick={() => app.showMenu()}>
               {
                 app.state.notification && (
                   <div className='header__badge'></div>
@@ -101,6 +101,7 @@ function CellForUser() {
                 notifications
               </Icon>
             </Link>
+            { app.state.menu && <Menu /> }
           </li>
         </React.Fragment>
       )}
@@ -131,6 +132,32 @@ function Popup() {
       )}
     </Subscribe>
   );
+}
+
+function Menu() {
+  return(
+    <Subscribe to={[AppContainer]}>
+      {container => (
+        <div className='menu'>
+          <div className='menu__screen' onClick={() => container.closeMenu()} />
+          <nav className='menu__nav'>
+            <ul className='menu__container'>
+              {['アリス', 'ボブ', 'ジョー'].map((name, index) => (
+                <li key={index} className='menu__cell'>
+                  <Link to='/messages/id' className='menu__link'>
+                    <div>
+                      <span className='menu__publisher'>{name}</span>さんからメッセージがあります。
+                    </div>
+                    <span className='menu__time'>{`約${index + 1}日前`}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      )}
+    </Subscribe>
+  )
 }
 
 function CellForGuest() {
