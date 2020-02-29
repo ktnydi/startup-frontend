@@ -23,4 +23,17 @@ export default class AppContainer extends Container {
   closeMenu = () => {
     this.setState({ menu: false })
   }
+
+  /*
+   * user: object
+   * {
+   *   name: string
+   *   email: string
+   *   password: string
+   *   password_confirm: string
+   * }
+   */
+  signUpWithEmail = (user) => {
+    //
+  }
 }

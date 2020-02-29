@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { Subscribe } from 'unstated';
 import StartupContainer from '../../container/StartupContainer';
+import SignUp from '../auth/SignUp';
 
 export default function Main() {
   return(
@@ -14,6 +15,9 @@ export default function Main() {
         {startup => (
           <Router>
             <Switch>
+              <Route path='/signup'>
+                <SignUp />
+              </Route>
               <Route path='/'>
                 <div>main</div>
               </Route>
