@@ -7,6 +7,7 @@ import {
 import { Subscribe } from 'unstated';
 import StartupContainer from '../../container/StartupContainer';
 import SignUp from '../auth/SignUp';
+import SignIn from '../auth/SignIn';
 
 export default function Main() {
   return(
@@ -17,6 +18,9 @@ export default function Main() {
             <Switch>
               <Route path='/signup'>
                 <SignUp />
+              </Route>
+              <Route path='/login'>
+                <SignIn />
               </Route>
               <Route path='/'>
                 <div>main</div>

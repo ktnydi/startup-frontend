@@ -36,4 +36,16 @@ export default class AppContainer extends Container {
   signUpWithEmail = (user) => {
     //
   }
+
+  /*
+   * user: object
+   * {
+   *   email: string
+   *   password: string
+   *   remember_me: boolean
+   * }
+   */
+  signInWithEmail = (user) => {
+    //
+  }
 }
