@@ -48,4 +48,14 @@ export default class AppContainer extends Container {
   signInWithEmail = (user) => {
     //
   }
+
+  /*
+  * user: object
+  * {
+  *   email: string
+  * }
+  */
+   sendPasswordResetEmail = (user) => {
+     //
+   }
 }
