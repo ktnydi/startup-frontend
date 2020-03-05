@@ -9,6 +9,7 @@ import StartupContainer from '../../container/StartupContainer';
 import SignUp from '../auth/SignUp';
 import SignIn from '../auth/SignIn';
 import ForgotPassword from '../auth/ForgotPassword';
+import Setting from '../auth/Setting';
 
 export default function Main() {
   return(
@@ -25,6 +26,9 @@ export default function Main() {
               </Route>
               <Route path = '/password/new'>
                 <ForgotPassword />
+              </Route>
+              <Route path = '/setting'>
+                <Setting />
               </Route>
               <Route path='/'>
                 <div>main</div>
