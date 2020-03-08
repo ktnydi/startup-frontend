@@ -70,4 +70,12 @@ export default class AppContainer extends Container {
   updatePassword = (user) => {
     //
   }
+
+  withdraw = (user) => {
+    const confirm = window.confirm('アカウントを削除します。本当によろしいですか？');
+
+    if (confirm) {
+      //
+    }
+  }
 }
