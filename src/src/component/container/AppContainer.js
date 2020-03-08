@@ -62,4 +62,8 @@ export default class AppContainer extends Container {
   updateProfile = (user) => {
     //
   }
+
+  updateEmail = (user) => {
+    //
+  }
 }
