@@ -59,6 +59,10 @@ export default class AppContainer extends Container {
      //
    }
 
+  resetPassword = (user) => {
+    //
+  }
+
   updateProfile = (user) => {
     //
   }

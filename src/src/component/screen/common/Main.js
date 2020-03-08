@@ -10,6 +10,7 @@ import SignUp from '../auth/SignUp';
 import SignIn from '../auth/SignIn';
 import ForgotPassword from '../auth/ForgotPassword';
 import Setting from '../auth/Setting';
+import EditPassword from '../auth/EditPassword';
 
 export default function Main() {
   return(
@@ -26,6 +27,9 @@ export default function Main() {
               </Route>
               <Route path = '/password/new'>
                 <ForgotPassword />
+              </Route>
+              <Route path = '/password/edit'>
+                <EditPassword />
               </Route>
               <Route path = '/setting'>
                 <Setting />
