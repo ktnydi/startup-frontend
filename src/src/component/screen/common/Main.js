@@ -11,6 +11,7 @@ import SignIn from '../auth/SignIn';
 import ForgotPassword from '../auth/ForgotPassword';
 import Setting from '../auth/Setting';
 import EditPassword from '../auth/EditPassword';
+import ProjectCreate from '../project/ProjectCreate';
 
 export default function Main() {
   return(
@@ -32,6 +33,9 @@ export default function Main() {
             </Route>
             <Route path = '/setting'>
               <Setting />
+            </Route>
+            <Route path = '/projects/create'>
+              <ProjectCreate />
             </Route>
             <Route path='/'>
               <div>main</div>
