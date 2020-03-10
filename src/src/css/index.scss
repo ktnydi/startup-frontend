@@ -1,4 +1,13 @@
 @import 'normalize';
+@import 'Header';
+@import 'Popup';
+@import 'Menu';
+@import 'SignUp';
+@import 'Sign';
+@import 'ForgotPassword';
+@import 'Setting';
+@import 'Tooltip';
+@import 'Profile';
 
 body {
   margin: 0;
@@ -7,9 +16,4 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }

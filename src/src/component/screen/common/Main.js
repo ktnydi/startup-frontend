@@ -6,6 +6,11 @@ import {
 } from 'react-router-dom';
 import { Subscribe } from 'unstated';
 import StartupContainer from '../../container/StartupContainer';
+import SignUp from '../auth/SignUp';
+import SignIn from '../auth/SignIn';
+import ForgotPassword from '../auth/ForgotPassword';
+import Setting from '../auth/Setting';
+import EditPassword from '../auth/EditPassword';
 
 export default function Main() {
   return(
@@ -14,6 +19,21 @@ export default function Main() {
         {startup => (
           <Router>
             <Switch>
+              <Route path='/signup'>
+                <SignUp />
+              </Route>
+              <Route path='/login'>
+                <SignIn />
+              </Route>
+              <Route path = '/password/new'>
+                <ForgotPassword />
+              </Route>
+              <Route path = '/password/edit'>
+                <EditPassword />
+              </Route>
+              <Route path = '/setting'>
+                <Setting />
+              </Route>
               <Route path='/'>
                 <div>main</div>
               </Route>
