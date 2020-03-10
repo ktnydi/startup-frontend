@@ -87,18 +87,6 @@
         background-color: rgba(78, 159, 213, 0.8);
       }
     }
-
-    &-notification {
-      @extend %__link;
-      padding: 0 0 0 15px;
-      border-left: 1px solid #ddd;
-      transition: .1s;
-      position: relative;
-
-      &:hover {
-        opacity: 0.6;
-      }
-    }
   }
 
   &__user {
@@ -116,6 +104,18 @@
   &__name {
     font-size: 1.2rem;
     margin: 0 0 0 10px;
+  }
+
+  &__notification {
+    padding: 0 0 0 15px;
+    border-left: 1px solid #ddd;
+    transition: .1s;
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.6;
+    }
   }
 
   &__badge {

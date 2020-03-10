@@ -91,7 +91,7 @@ function CellForUser() {
             { app.state.popup && <Popup />}
           </li>
           <li className='header__cell'>
-            <Link to='/notification' className='header__link-notification' onClick={() => app.showMenu()}>
+            <div className='header__notification' onClick={() => app.showMenu()}>
               {
                 app.state.notification && (
                   <div className='header__badge'></div>
@@ -100,7 +100,7 @@ function CellForUser() {
               <Icon className={classes.icon}>
                 notifications
               </Icon>
-            </Link>
+            </div>
             { app.state.menu && <Menu /> }
           </li>
         </React.Fragment>
