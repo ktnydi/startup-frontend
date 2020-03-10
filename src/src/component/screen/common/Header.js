@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Subscribe } from 'unstated';
 import AppContainer from '../../container/AppContainer';
 import { Icon, Avatar, makeStyles } from '@material-ui/core';
@@ -9,21 +9,19 @@ export default function Header() {
   return(
     <header className='header'>
       <div className='header__container'>
-        <Router>
-          <h1 className='header__logo'>
-            <Link to='/' className='header__link-logo'>startup</Link>
-          </h1>
-          <nav className='header__nav-left'>
-            <ul className='header__list'>
-              <NavLeftCell />
-            </ul>
-          </nav>
-          <nav className='header__nav'>
-            <ul className='header__list'>
-              <NavRightCell />
-            </ul>
-          </nav>
-        </Router>
+        <h1 className='header__logo'>
+          <Link to='/' className='header__link-logo'>startup</Link>
+        </h1>
+        <nav className='header__nav-left'>
+          <ul className='header__list'>
+            <NavLeftCell />
+          </ul>
+        </nav>
+        <nav className='header__nav'>
+          <ul className='header__list'>
+            <NavRightCell />
+          </ul>
+        </nav>
       </div>
     </header>
   );

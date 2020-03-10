@@ -17,28 +17,26 @@ export default function Main() {
     <main>
       <Subscribe to={[StartupContainer]}>
         {startup => (
-          <Router>
-            <Switch>
-              <Route path='/signup'>
-                <SignUp />
-              </Route>
-              <Route path='/login'>
-                <SignIn />
-              </Route>
-              <Route path = '/password/new'>
-                <ForgotPassword />
-              </Route>
-              <Route path = '/password/edit'>
-                <EditPassword />
-              </Route>
-              <Route path = '/setting'>
-                <Setting />
-              </Route>
-              <Route path='/'>
-                <div>main</div>
-              </Route>
-            </Switch>
-          </Router>
+          <Switch>
+            <Route path='/signup'>
+              <SignUp />
+            </Route>
+            <Route path='/login'>
+              <SignIn />
+            </Route>
+            <Route path = '/password/new'>
+              <ForgotPassword />
+            </Route>
+            <Route path = '/password/edit'>
+              <EditPassword />
+            </Route>
+            <Route path = '/setting'>
+              <Setting />
+            </Route>
+            <Route path='/'>
+              <div>main</div>
+            </Route>
+          </Switch>
         )}
       </Subscribe>
     </main>
