@@ -11,6 +11,7 @@ import SignIn from '../auth/SignIn';
 import ForgotPassword from '../auth/ForgotPassword';
 import Setting from '../auth/Setting';
 import EditPassword from '../auth/EditPassword';
+import Project from '../project/Project';
 import ProjectCreate from '../project/ProjectCreate';
 
 export default function Main() {
@@ -38,7 +39,7 @@ export default function Main() {
               <ProjectCreate />
             </Route>
             <Route path='/'>
-              <div>main</div>
+              <Project />
             </Route>
           </Switch>
         )}
