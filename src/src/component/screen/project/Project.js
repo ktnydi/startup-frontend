@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSpring, animated } from 'react-spring';
 
-const items = [
+const itemsData = [
   {id: '1', title: 'ここにタイトルが入ります。', about: 'ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。', createdAt: new Date().getTime(), pv: 10, author: 'Alice'},
   {id: '2', title: 'ここにタイトルが入ります。', about: 'ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。', createdAt: new Date('2020/03/14/21:00').getTime(), pv: 2, author: 'Lucy'},
   {id: '3', title: 'ここにタイトルが入ります。', about: 'ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。', createdAt: new Date('2020/03/14').getTime(), pv: 23, author: 'Bob'},
@@ -13,19 +13,20 @@ const items = [
 ]
 
 export default function Project() {
+  const [items, setItems] = React.useState(itemsData);
   const classes = useStyles();
 
   return(
     <div className={classes.root}>
       <div className={classes.container}>
         <h2 className={classes.header}>募集中のプロジェクト</h2>
-        <ProjectList />
+        <ProjectList items={items} />
       </div>
     </div>
   )
 }
 
-function ProjectList() {
+function ProjectList({items}) {
   const classes = useStyles();
   const props = useSpring({opacity: 1, transform: 'translateY(0)', from: {opacity: 0, transform: 'translateY(50px)'}});
 
