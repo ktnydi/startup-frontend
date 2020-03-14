@@ -116,7 +116,7 @@ function Popup() {
           <nav className='popup__nav'>
             <ul className='popup__container'>
               <li className='popup__item'>
-                <Link to='/profile' className='popup__link'>プロフィール</Link>
+                <Link to='/setting' className='popup__link'>アカウント設定</Link>
               </li>
               <li className='popup__item'>
                 <Link to='/dashboard' className='popup__link'>ダッシュボード</Link>
