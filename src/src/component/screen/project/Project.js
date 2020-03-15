@@ -14,12 +14,54 @@ const itemsData = [
 
 export default function Project() {
   const [items, setItems] = React.useState(itemsData);
+  const [action, setAction] = React.useState(0);
   const classes = useStyles();
+
+  const actions = ['new', 'old', 'pv'];
+
+  const orderItems = (e, key, desc = false) => {
+    const newItems = Object.assign([], items);
+    newItems.sort((prevItem, nextItem) => {
+      const judge = prevItem[key] - nextItem[key];
+      return desc ? -judge : judge;
+    });
+    setItems(newItems);
+    setAction(actions.indexOf(e.target.name));
+  }
 
   return(
     <div className={classes.root}>
       <div className={classes.container}>
         <h2 className={classes.header}>募集中のプロジェクト</h2>
+        <div className={classes.sortDispacher}>
+          <button
+            type='button'
+            name='new'
+            onClick={(e) => orderItems(e, 'createdAt', true)}
+            className={classes.sortAction}
+            style={{opacity: action === 0 ? 1 : 0.6}}
+          >
+            新しい順
+          </button>
+          <button
+            type='button'
+            name='old'
+            onClick={(e) => orderItems(e, 'createdAt')}
+            className={classes.sortAction}
+            style={{opacity: action === 1 ? 1 : 0.6}}
+          >
+            古い順
+          </button>
+          <button
+            type='button'
+            name='pv'
+            onClick={(e) => orderItems(e, 'pv', true)}
+            className={classes.sortAction}
+            style={{opacity: action === 2 ? 1 : 0.6}}
+          >
+            PV順
+          </button>
+        </div>
         <ProjectList items={items} />
       </div>
     </div>
@@ -106,11 +148,27 @@ const useStyles = makeStyles({
     fontSize: '1.8rem',
     fontWeight: 'bolder',
     padding: '0 15px 5px',
-    margin: '0 0 20px',
     borderBottom: '1px solid #ddd',
     color: 'rgba(0, 0, 0, 0.75)',
   },
+  sortDispacher: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: '20px 0 0',
+  },
+  sortAction: {
+    display: 'inline-block',
+    margin: '0 10px 0 0',
+    padding: '5px 10px',
+    border: '1px solid #ddd',
+    borderRadius: '3px',
+    outline: 'none',
+    cursor: 'pointer',
+    fontSize: '1.2rem',
+    color: 'rgba(0, 0, 0, 0.75)',
+  },
   list: {
+    margin: '20px 0 0',
     border: '1px solid #ddd',
     borderRadius: 3,
   },
