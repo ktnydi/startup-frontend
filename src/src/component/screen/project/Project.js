@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Icon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSpring, animated } from 'react-spring';
+import theme from '../../asset/Theme';
 
 const itemsData = [
   {id: '1', title: 'ここにタイトルが入ります。', about: 'ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。', createdAt: new Date().getTime(), pv: 10, author: 'Alice'},
@@ -14,18 +16,33 @@ const itemsData = [
 
 export default function Project() {
   const [items, setItems] = React.useState(itemsData);
+  const [filterItems, setFilterItems] = React.useState([]);
   const [action, setAction] = React.useState(0);
+  const [search, setSearch] = React.useState('');
   const classes = useStyles();
 
   const actions = ['new', 'old', 'pv'];
 
+  React.useEffect(() => {
+    setFilterItems(items);
+  }, [items])
+
+  const searchItems = (e) => {
+    if (e.type === 'keydown' && e.keyCode !== 13) { return false }
+
+    const filterItems = items.filter((item) => {
+      return item.about.indexOf(search) >= 0
+    });
+    setFilterItems(filterItems);
+  }
+
   const orderItems = (e, key, desc = false) => {
-    const newItems = Object.assign([], items);
+    const newItems = Object.assign([], search.length > 0 ? filterItems : items);
     newItems.sort((prevItem, nextItem) => {
       const judge = prevItem[key] - nextItem[key];
       return desc ? -judge : judge;
     });
-    setItems(newItems);
+    search.length > 0 ? setFilterItems(newItems) : setItems(newItems);
     setAction(actions.indexOf(e.target.name));
   }
 
@@ -33,6 +50,20 @@ export default function Project() {
     <div className={classes.root}>
       <div className={classes.container}>
         <h2 className={classes.header}>募集中のプロジェクト</h2>
+        <div className={classes.searchDispacher}>
+          <input
+            type='text'
+            name={actions[action]}
+            placeholder='キーワードで検索する'
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => searchItems(e)}
+            className={classes.searchAction}
+          />
+          <div className={classes.searchBtn} onClick={(e) => searchItems(e)}>
+            <Icon className={classes.searchIcon}>search</Icon>
+          </div>
+        </div>
         <div className={classes.sortDispacher}>
           <button
             type='button'
@@ -62,7 +93,7 @@ export default function Project() {
             PV順
           </button>
         </div>
-        <ProjectList items={items} />
+        <ProjectList items={filterItems} />
       </div>
     </div>
   )
@@ -75,7 +106,13 @@ function ProjectList({items}) {
   return(
     <animated.div className={classes.nav} style={props}>
       <div className={classes.list}>
-        {items.map((item, index) => ( <ProjectCell item={item} key={index} /> ))}
+        {
+          items.length > 0 ? (
+            items.map((item, index) => ( <ProjectCell item={item} key={index} /> ))
+          ) : (
+            <div className={classes.noItems}>検索結果が見つかりませんでした。</div>
+          )
+        }
       </div>
     </animated.div>
   )
@@ -144,6 +181,40 @@ const useStyles = makeStyles({
   main: {
     width: '100%',
   },
+  searchDispacher: {
+    margin: '20px 0 0',
+    position: 'relative',
+  },
+  searchAction: {
+    display: 'inline-block',
+    width: '100%',
+    height: 44,
+    padding: '0 60px 0 20px',
+    border: '1px solid #ddd',
+    borderRadius: '22px',
+    outline: 'none',
+    transition: '0.2s',
+    '&:focus': {
+      borderColor: theme.palette.primary.main,
+    },
+  },
+  searchBtn: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 44,
+    padding: '0 20px',
+    position: 'absolute',
+    top: '50%',
+    right: 0,
+    transform: 'translateY(-50%)',
+    cursor: 'pointer',
+    fontSize: '2rem',
+    color: theme.palette.primary.main,
+  },
+  searchIcon: {
+    fontSize: 'inherit',
+  },
   header: {
     fontSize: '1.8rem',
     fontWeight: 'bolder',
@@ -171,6 +242,11 @@ const useStyles = makeStyles({
     margin: '20px 0 0',
     border: '1px solid #ddd',
     borderRadius: 3,
+  },
+  noItems: {
+    padding: '50px 15px',
+    textAlign: 'center',
+    color: 'rgba(0, 0, 0, 0.75)',
   },
   cell: {
     width: '100%',
