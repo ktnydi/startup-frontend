@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSpring, animated } from 'react-spring';
 import Markdown from '../common/Markdown';
+import theme from '../../asset/Theme';
 import itemsData from '../data/itemsData';
 
 export default function ProjectDetail() {
@@ -26,6 +27,11 @@ export default function ProjectDetail() {
         <div className={classes.articleContent}>
           <h2  className={classes.articleTitle}>{item.title}</h2>
           <Markdown source={item.about} />
+        </div>
+        <div className={classes.submit}>
+          <button type='button' className={classes.post}>
+            <span>プロジェクトに応募する</span>
+          </button>
         </div>
       </div>
     </animated.div>
@@ -56,5 +62,29 @@ const useStyles = makeStyles({
     fontSize: '2.5rem',
     fontWeight: 'bolder',
     color: 'rgba(0, 0, 0, 0.75)',
+  },
+  submit: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: '40px 0 0',
+    padding: '20px 0 0',
+    borderTop: '1px solid #ddd',
+  },
+  post: {
+    display: 'inline-block',
+    width: 300,
+    padding: '15px',
+    border: 'none',
+    borderRadius: 3,
+    outline: 'none',
+    backgroundColor: theme.palette.primary.main,
+    boxShadow: '0 5px 3px -3px rgba(0, 0, 0, 0.2)',
+    color: '#fff',
+    cursor: 'pointer',
+    transition: '0.1s',
+    '&:hover': {
+      opacity: 0.6,
+    },
   },
 });
