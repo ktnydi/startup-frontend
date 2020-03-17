@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSpring, animated } from 'react-spring';
 import Markdown from '../common/Markdown';
+import { dateTime } from '../../../helper/DateFormatter';
 import theme from '../../asset/Theme';
 import itemsData from '../data/itemsData';
 
@@ -22,7 +23,7 @@ export default function ProjectDetail() {
       <div className={classes.container}>
         <div className={classes.articleHeader}>
           <div>{item.author}</div>
-          <div>{item.createdAt}・{item.pv} Views</div>
+          <div>{dateTime(item.createdAt)}・{item.pv} Views</div>
         </div>
         <div className={classes.articleContent}>
           <h2  className={classes.articleTitle}>{item.title}</h2>
