@@ -22,3 +22,11 @@ export const dateDuration = (timestamp) => {
   // Other
   return `${Math.floor(durationMinute / 525600)}年前`;
 }
+
+export const dateTime = (timestamp) => {
+  const date = new Date(timestamp);
+  const year = ('0' + date.getFullYear()).slice(-4);
+  const month = ('0' + date.getMonth()).slice(-2);
+  const day = ('0' + date.getDate()).slice(-2);
+  return `${year}/${month}/${day}`;
+}

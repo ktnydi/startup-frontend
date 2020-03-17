@@ -1,4 +1,4 @@
-import { dateDuration } from './DateFormatter';
+import { dateDuration, dateTime } from './DateFormatter';
 
 test('display date duration', () => {
   let date = new Date();
@@ -32,4 +32,9 @@ test('display date duration', () => {
   date = new Date();
   const OverOneYear = date.setMonth(date.getMonth() - 20);
   expect(dateDuration(OverOneYear)).toMatch(/年前/);
+});
+
+test ('display datetime', () => {
+  const timestamp = new Date().getTime();
+  expect(dateTime(timestamp)).toMatch(/\d{4}\/\d{2}\/\d{2}/);
 });
