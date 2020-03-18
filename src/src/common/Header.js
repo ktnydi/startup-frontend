@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Subscribe } from 'unstated';
-import AppContainer from '../../container/AppContainer';
+import AppContainer from '../container/AppContainer';
 import { Icon, Avatar, makeStyles } from '@material-ui/core';
-import avatar from '../../../image/sample/avatar.png';
+import avatar from '../asset/image/avatar.png';
 
 export default function Header() {
   return(

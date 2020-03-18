@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Subscribe } from 'unstated';
-import AppContainer from '../../container/AppContainer';
+import AppContainer from '../container/AppContainer';
 
 export default class SignUp extends React.Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Subscribe } from 'unstated';
-import AppContainer from '../../container/AppContainer';
+import AppContainer from '../container/AppContainer';
 
 export default function EditPassword() {
   const [newPassword, setNewPassword] = useState('');

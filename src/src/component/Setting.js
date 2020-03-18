@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
-import Profile from './tabitem/Profile';
-import Email from './tabitem/Email';
-import Password from './tabitem/Password';
-import Withdraw from './tabitem/Withdraw';
+import Profile from './SettingProfile';
+import Email from './SettingEmail';
+import Password from './SettingPassword';
+import Withdraw from './SettingWithdraw';
 
 export default function Setting() {
   const initialIndex = () => {

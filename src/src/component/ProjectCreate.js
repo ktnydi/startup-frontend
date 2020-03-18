@@ -3,7 +3,7 @@ import { TextareaAutosize, Icon, Tooltip } from '@material-ui/core';
 import TagField from '../common/TagField';
 import Markdown from '../common/Markdown';
 import { makeStyles } from '@material-ui/core/styles';
-import theme from '../../asset/Theme';
+import theme from '../asset/Theme';
 
 const defaultText = [
   '## 内容',
