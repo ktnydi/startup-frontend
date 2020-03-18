@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSpring, animated } from 'react-spring';
 import Markdown from '../common/Markdown';
@@ -28,6 +29,18 @@ export default function ProjectDetail() {
         <div className={classes.articleContent}>
           <h2  className={classes.articleTitle}>{item.title}</h2>
           <Markdown source={item.about} />
+        </div>
+        <div className={classes.authorInfo}>
+          <h2 className={classes.authorInfoHeader}>ファウンダー情報</h2>
+          <div className={classes.authorInfoContent}>
+            <Avatar alt='author image' src='https://source.unsplash.com/random/80x80' className={classes.bigAvatar} />
+            <div className={classes.introduce}>
+              <div className={classes.name}>{item.author}</div>
+              <div>
+                ここに自己紹介文が入ります。ここに自己紹介文が入ります。ここに自己紹介文が入ります。ここに自己紹介文が入ります。ここに自己紹介文が入ります。ここに自己紹介文が入ります。ここに自己紹介文が入ります。ここに自己紹介文が入ります。ここに自己紹介文が入ります。
+              </div>
+            </div>
+          </div>
         </div>
         <div className={classes.submit}>
           <button type='button' className={classes.post}>
@@ -64,11 +77,52 @@ const useStyles = makeStyles({
     fontWeight: 'bolder',
     color: 'rgba(0, 0, 0, 0.75)',
   },
+  authorInfo: {
+    margin: '50px 0 0',
+    padding: '40px 0',
+    lineHeight: '1.7em',
+    borderTop: '1px solid #ddd',
+    color: 'rgba(0, 0, 0, 0.75)',
+  },
+  authorInfoHeader: {
+    fontSize: '1.8rem',
+    fontWeight: 'bolder',
+    textAlign: 'center',
+    margin: '0 0 40px',
+    padding: '0 0 15px',
+    position: 'relative',
+    '&::before': {
+      display: 'inline-block',
+      content: '""',
+      width: 50,
+      height: 3,
+      backgroundColor: theme.palette.primary.main,
+      position: 'absolute',
+      bottom: 0,
+      left: '50%',
+      transform: 'translateX(-50%)',
+    },
+  },
+  authorInfoContent: {
+    display: 'flex',
+  },
+  bigAvatar: {
+    width: 100,
+    height: 100,
+    display: 'inline-block',
+    border: '1px solid #ddd',
+  },
+  name: {
+    fontSize: '1.5rem',
+    fontWeight: 'bolder',
+  },
+  introduce: {
+    margin: '0 0 0 15px',
+  },
   submit: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: '40px 0 0',
     padding: '20px 0 0',
     borderTop: '1px solid #ddd',
   },
