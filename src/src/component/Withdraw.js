@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { Subscribe } from 'unstated';
-import AppContainer from '../../../container/AppContainer';
-import theme from '../../../asset/Theme';
+import AppContainer from '../container/AppContainer';
+import theme from '../asset/Theme';
 
 const useStyles = makeStyles({
   root: {

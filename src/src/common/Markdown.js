@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ReactMarkdown from 'react-markdown';
-import theme from '../../asset/Theme';
+import theme from '../asset/Theme';
 
 export default function Markdown({source}) {
   const classes = useStyles();

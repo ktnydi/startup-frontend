@@ -4,8 +4,8 @@ import { Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSpring, animated } from 'react-spring';
 import Markdown from '../common/Markdown';
-import { dateTime } from '../../../helper/DateFormatter';
-import theme from '../../asset/Theme';
+import { dateTime } from '../helper/DateFormatter';
+import theme from '../asset/Theme';
 import itemsData from '../data/itemsData';
 
 export default function ProjectDetail() {

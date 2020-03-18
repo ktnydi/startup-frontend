@@ -5,15 +5,15 @@ import {
   Route
 } from 'react-router-dom';
 import { Subscribe } from 'unstated';
-import StartupContainer from '../../container/StartupContainer';
-import SignUp from '../auth/SignUp';
-import SignIn from '../auth/SignIn';
-import ForgotPassword from '../auth/ForgotPassword';
-import Setting from '../auth/Setting';
-import EditPassword from '../auth/EditPassword';
-import Project from '../project/Project';
-import ProjectDetail from '../project/ProjectDetail';
-import ProjectCreate from '../project/ProjectCreate';
+import StartupContainer from '../container/StartupContainer';
+import SignUp from '../component/SignUp';
+import SignIn from '../component/SignIn';
+import ForgotPassword from '../component/ForgotPassword';
+import Setting from '../component/Setting';
+import EditPassword from '../component/EditPassword';
+import Project from '../component/Project';
+import ProjectDetail from '../component/ProjectDetail';
+import ProjectCreate from '../component/ProjectCreate';
 
 export default function Main() {
   return(

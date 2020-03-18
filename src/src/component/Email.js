@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { TextField, MuiThemeProvider, makeStyles } from '@material-ui/core';
-import theme from '../../../asset/Theme';
+import theme from '../asset/Theme';
 import { Subscribe } from 'unstated';
-import AppContainer from '../../../container/AppContainer';
+import AppContainer from '../container/AppContainer';
 
 const useStyles = makeStyles({
   label: {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Icon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSpring, animated } from 'react-spring';
-import theme from '../../asset/Theme';
+import theme from '../asset/Theme';
 import itemsData from '../data/itemsData';
 
 export default function Project() {
