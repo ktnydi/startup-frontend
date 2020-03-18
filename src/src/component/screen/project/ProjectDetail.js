@@ -17,7 +17,7 @@ export default function ProjectDetail() {
   React.useEffect(() => {
     const item = itemsData.find(item => item.id === id);
     setItem(item);
-  }, [])
+  }, [id])
 
   return(
     <animated.div className={classes.root} style={props}>
