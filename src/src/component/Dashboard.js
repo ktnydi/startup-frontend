@@ -1,6 +1,9 @@
 import React from 'react';
 import { Avatar, Tabs, Tab } from '@material-ui/core';
+import TabPanel from '../common/TabPanel';
 import { makeStyles } from '@material-ui/core/styles';
+import WantedList from './WantedList';
+import AppliedList from './AppliedList';
 import theme from '../asset/Theme';
 
 export default function Dashboard() {
@@ -30,6 +33,12 @@ export default function Dashboard() {
           <Tab label='募集' className={classes.tab} disableFocusRipple={true} disableRipple={true} />
           <Tab label='応募' className={classes.tab} disableFocusRipple={true} disableRipple={true} />
         </Tabs>
+        <TabPanel index={0} currentIndex={index}>
+          <WantedList />
+        </TabPanel>
+        <TabPanel index={1} currentIndex={index}>
+          <AppliedList />
+        </TabPanel>
       </div>
     </div>
   );
