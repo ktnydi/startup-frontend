@@ -5,10 +5,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import WantedList from './WantedList';
 import AppliedList from './AppliedList';
 import theme from '../asset/Theme';
+import { useSpring, animated } from 'react-spring';
 
 export default function Dashboard() {
   const [index, setIndex] = React.useState(0);
   const classes = useStyles();
+  const loading = useSpring({
+    transform: 'translateY(0)', opacity: 1,
+    from: {transform: 'translateY(50px)', opacity: 0}
+  });
 
   const handleChangeTab = (e, newValue) => (
     setIndex(newValue)
@@ -20,7 +25,7 @@ export default function Dashboard() {
         <Avatar alt='login user image' src='https://source.unsplash.com/random/80x80' className={classes.avatar} />
         <div className={classes.name}>ゲストユーザー</div>
       </div>
-      <div className={classes.tabBar}>
+      <animated.div className={classes.tabBar} style={loading}>
         <Tabs
           indicatorColor='primary'
           variant='fullWidth'
@@ -39,7 +44,7 @@ export default function Dashboard() {
         <TabPanel index={1} currentIndex={index}>
           <AppliedList />
         </TabPanel>
-      </div>
+      </animated.div>
     </div>
   );
 }
