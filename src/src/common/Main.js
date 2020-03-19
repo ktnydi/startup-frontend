@@ -10,6 +10,7 @@ import SignUp from '../component/SignUp';
 import SignIn from '../component/SignIn';
 import ForgotPassword from '../component/ForgotPassword';
 import Setting from '../component/Setting';
+import Dashboard from '../component/Dashboard';
 import EditPassword from '../component/EditPassword';
 import Project from '../component/Project';
 import ProjectDetail from '../component/ProjectDetail';
@@ -35,6 +36,9 @@ export default function Main() {
             </Route>
             <Route path = '/setting'>
               <Setting />
+            </Route>
+            <Route path='/dashboard'>
+              <Dashboard />
             </Route>
             <Route path = '/projects/create'>
               <ProjectCreate />
