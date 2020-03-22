@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, MuiThemeProvider, makeStyles } from '@material-ui/core';
 import theme from '../asset/Theme';
-import { Subscribe } from 'unstated';
-import AppContainer from '../container/AppContainer';
 
 const useStyles = makeStyles({
   label: {
@@ -84,17 +82,13 @@ export default function Email() {
           </MuiThemeProvider>
         </div>
         <div className={classes.submit}>
-          <Subscribe to={[AppContainer]}>
-          {app => (
-            <button
-              type='button'
-              onClick={() => app.updateEmail(user)}
-              className={classes.updateBtn}
-            >
-              <span>変更する</span>
-            </button>
-          )}
-          </Subscribe>
+          <button
+            type='button'
+            onClick={() => console.log('update email')}
+            className={classes.updateBtn}
+          >
+            <span>変更する</span>
+          </button>
         </div>
       </form>
     </div>

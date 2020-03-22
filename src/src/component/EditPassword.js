@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Subscribe } from 'unstated';
-import AppContainer from '../container/AppContainer';
 
 export default function EditPassword() {
   const [newPassword, setNewPassword] = useState('');
@@ -67,17 +65,13 @@ export default function EditPassword() {
             </label>
           </div>
           <div className='forgot__section'>
-            <Subscribe to={[AppContainer]}>
-              {app => (
-                <button
-                  className='forgot__submit'
-                  disabled={disabled}
-                  onClick={() => app.resetPassword(user)}
-                >
-                  <span>再設定する</span>
-                </button>
-              )}
-            </Subscribe>
+            <button
+              className='forgot__submit'
+              disabled={disabled}
+              onClick={() => console.log('reset password')}
+            >
+              <span>再設定する</span>
+            </button>
           </div>
         </form>
       </div>

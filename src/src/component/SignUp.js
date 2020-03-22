@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Subscribe } from 'unstated';
-import AppContainer from '../container/AppContainer';
 
 export default class SignUp extends React.Component {
   constructor(props) {
@@ -95,17 +93,13 @@ export default class SignUp extends React.Component {
               </label>
             </div>
             <div className='signup__section'>
-              <Subscribe to={[AppContainer]}>
-                {app => (
-                  <button
-                    className='signup__submit'
-                    disabled={this.state.disabled}
-                    onClick={() => app.signUpWithEmail(this.state.user)}
-                  >
-                    <span>登録する</span>
-                  </button>
-                )}
-              </Subscribe>
+              <button
+                className='signup__submit'
+                disabled={this.state.disabled}
+                onClick={() => console.log('signup')}
+              >
+                <span>登録する</span>
+              </button>
             </div>
           </form>
         </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Subscribe } from 'unstated';
-import AppContainer from '../container/AppContainer';
+import { Connect } from '../context/Context';
 import { Icon, Avatar, makeStyles } from '@material-ui/core';
 import avatar from '../asset/image/avatar.png';
 
@@ -40,123 +39,103 @@ function NavLeftCell() {
   );
 }
 
-function NavRightCell() {
+const NavRightCell = Connect((props) => (
+  props.store.userSignIn ? <CellForUser /> : <CellForGuest />
+));
+
+function CellForUser() {
   return(
-    <Subscribe to={[AppContainer]}>
-      {app => (
-        app.state.userSignIn
-          ? <CellForUser />
-          : <CellForGuest />
-      )}
-    </Subscribe>
+    <React.Fragment>
+      <li className='header__cell'>
+        <Link to='/projects/create' className='header__link-newproject'>プロジェクト作成</Link>
+      </li>
+      <li className='header__cell'>
+        <CurrentUser />
+        <Popup />
+      </li>
+      <li className='header__cell'>
+        <Notification />
+        <Menu />
+      </li>
+    </React.Fragment>
   );
 }
 
-function CellForUser() {
-  const useStyles = makeStyles(theme => ({
-    root: {
-      display: 'flex',
-      '& > *': {
-        margin: theme.spacing(1),
-      },
-    },
-    avatar: {
-      width: 40,
-      height: 40,
-      boxShadow: '0 1px 8px rgba(0, 0, 0, 0.2)',
-    },
-    icon: {
-      fontSize: '2.2rem',
-      color: 'rgba(0, 0, 0, 0.25)',
-    },
-  }));
-
+const CurrentUser = Connect((props) => {
   const classes = useStyles();
 
   return(
-    <Subscribe to={[AppContainer]}>
-      {app => (
-        <React.Fragment>
-          <li className='header__cell'>
-            <Link to='/projects/create' className='header__link-newproject'>プロジェクト作成</Link>
-          </li>
-          <li className='header__cell'>
-            <div onClick={() => app.showPopup()} className='header__user'>
-              <Avatar alt='avatar' src={avatar} className={classes.avatar}
-              />
-              <span className='header__name'>ゲストユーザー</span>
-            </div>
-            { app.state.popup && <Popup />}
-          </li>
-          <li className='header__cell'>
-            <div className='header__notification' onClick={() => app.showMenu()}>
-              {
-                app.state.notification && (
-                  <div className='header__badge'></div>
-                )
-              }
-              <Icon className={classes.icon}>
-                notifications
-              </Icon>
-            </div>
-            { app.state.menu && <Menu /> }
-          </li>
-        </React.Fragment>
-      )}
-    </Subscribe>
+    <div onClick={() => props.store.showPopup()} className='header__user'>
+      <Avatar alt='avatar' src={avatar} className={classes.avatar}
+      />
+      <span className='header__name'>ゲストユーザー</span>
+    </div>
   );
-}
+});
 
-function Popup() {
+const Popup = Connect((props) => {
+  if (!props.store.popup) { return false }
+
   return(
-    <Subscribe to={[AppContainer]}>
-      {app => (
-        <div className='popup'>
-          <div className='popup__screen' onClick={() => app.closePopup()} />
-          <nav className='popup__nav'>
-            <ul className='popup__container'>
-              <li className='popup__item'>
-                <Link to='/setting' className='popup__link'>アカウント設定</Link>
-              </li>
-              <li className='popup__item'>
-                <Link to='/dashboard' className='popup__link'>ダッシュボード</Link>
-              </li>
-              <li className='popup__item'>
-                <Link to='/logout' className='popup__link'>ログアウト</Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      )}
-    </Subscribe>
+    <div className='popup'>
+      <div className='popup__screen' onClick={() => props.store.closePopup()} />
+      <nav className='popup__nav'>
+        <ul className='popup__container'>
+          <li className='popup__item'>
+            <Link to='/setting' className='popup__link'>アカウント設定</Link>
+          </li>
+          <li className='popup__item'>
+            <Link to='/dashboard' className='popup__link'>ダッシュボード</Link>
+          </li>
+          <li className='popup__item'>
+            <Link to='/logout' className='popup__link'>ログアウト</Link>
+          </li>
+        </ul>
+      </nav>
+    </div>
   );
-}
+});
 
-function Menu() {
+const Notification = Connect((props) => {
+  const classes = useStyles();
+
   return(
-    <Subscribe to={[AppContainer]}>
-      {container => (
-        <div className='menu'>
-          <div className='menu__screen' onClick={() => container.closeMenu()} />
-          <nav className='menu__nav'>
-            <ul className='menu__container'>
-              {['アリス', 'ボブ', 'ジョー'].map((name, index) => (
-                <li key={index} className='menu__cell'>
-                  <Link to='/messages/id' className='menu__link'>
-                    <div>
-                      <span className='menu__publisher'>{name}</span>さんからメッセージがあります。
-                    </div>
-                    <span className='menu__time'>{`約${index + 1}日前`}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      )}
-    </Subscribe>
+    <div className='header__notification' onClick={() => props.store.showMenu()}>
+      {
+        props.store.notification && (
+          <div className='header__badge'></div>
+          )
+        }
+      <Icon className={classes.icon}>
+        notifications
+      </Icon>
+    </div>
+  );
+});
+
+const Menu = Connect((props) => {
+  if (!props.store.menu) { return false }
+
+  return(
+    <div className='menu'>
+      <div className='menu__screen' onClick={() => props.store.closeMenu()} />
+      <nav className='menu__nav'>
+        <ul className='menu__container'>
+          {['アリス', 'ボブ', 'ジョー'].map((name, index) => (
+            <li key={index} className='menu__cell'>
+              <Link to='/messages/id' className='menu__link'>
+                <div>
+                  <span className='menu__publisher'>{name}</span>さんからメッセージがあります。
+                </div>
+                <span className='menu__time'>{`約${index + 1}日前`}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
   )
-}
+});
 
 function CellForGuest() {
   return(
@@ -170,3 +149,21 @@ function CellForGuest() {
     </React.Fragment>
   );
 }
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    boxShadow: '0 1px 8px rgba(0, 0, 0, 0.2)',
+  },
+  icon: {
+    fontSize: '2.2rem',
+    color: 'rgba(0, 0, 0, 0.25)',
+  },
+}));

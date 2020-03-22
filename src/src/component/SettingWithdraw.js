@@ -1,7 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import { Subscribe } from 'unstated';
-import AppContainer from '../container/AppContainer';
 import theme from '../asset/Theme';
 
 const useStyles = makeStyles({
@@ -66,17 +64,13 @@ export default function Withdraw() {
         </p>
       </div>
       <div className={classes.submit}>
-        <Subscribe to={[AppContainer]}>
-        {app => (
-          <button
-            type='button'
-            onClick={() => app.withdraw()}
-            className={classes.deleteBtn}
-          >
-            <span>退会する</span>
-          </button>
-        )}
-        </Subscribe>
+        <button
+          type='button'
+          onClick={() => console.log('withdraw account')}
+          className={classes.deleteBtn}
+        >
+          <span>退会する</span>
+        </button>
       </div>
     </div>
   )

@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Subscribe } from 'unstated';
-import AppContainer from '../container/AppContainer';
 
 export default class SignIn extends React.Component {
   constructor(props) {
@@ -84,17 +82,13 @@ export default class SignIn extends React.Component {
               </label>
             </div>
             <div className='sign__section'>
-              <Subscribe to={[AppContainer]}>
-                {app => (
-                  <button
-                    className='sign__submit'
-                    disabled={this.state.disabled}
-                    onClick={() => app.signInWithEmail(this.state.user)}
-                  >
-                    <span>ログインする</span>
-                  </button>
-                )}
-              </Subscribe>
+              <button
+                className='sign__submit'
+                disabled={this.state.disabled}
+                onClick={() => console.log('login')}
+              >
+                <span>ログインする</span>
+              </button>
             </div>
             <div className='sign__section'>
               <Link to='/password/new' className='sign__forgot-password'>パスワードをお忘れですか？</Link>
