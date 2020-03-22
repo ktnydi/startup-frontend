@@ -72,6 +72,14 @@ class Provider extends React.Component {
       })
   }
 
+  signOut = (history) => {
+    auth.signOut()
+    this.setState({
+      userSignIn: false,
+    })
+    history.push('/')
+  }
+
   render() {
     const store = {
       ...this.state,
@@ -81,6 +89,7 @@ class Provider extends React.Component {
       closeMenu: this.closeMenu,
       signUpWithEmail: this.signUpWithEmail,
       signInWithEmail: this.signInWithEmail,
+      signOut: this.signOut,
     }
 
     return(
