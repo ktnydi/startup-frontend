@@ -7,8 +7,6 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import Tooltip from '../common/Tooltip';
-import { Subscribe } from 'unstated';
-import AppContainer from '../container/AppContainer';
 import avatar from '../asset/image/avatar.png';
 import theme from '../asset/Theme';
 
@@ -188,17 +186,13 @@ export default function Profile() {
           </MuiThemeProvider>
         </div>
         <div className='profile__submit'>
-          <Subscribe to={[AppContainer]}>
-          {app => (
-            <button
-              type='button'
-              onClick={() => app.updateProfile(user)}
-              className='profile__update-btn'
-            >
-              <span>変更する</span>
-            </button>
-          )}
-          </Subscribe>
+          <button
+            type='button'
+            onClick={() => console.log('update profile')}
+            className='profile__update-btn'
+          >
+            <span>変更する</span>
+          </button>
         </div>
       </form>
     </div>

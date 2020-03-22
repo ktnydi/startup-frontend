@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Subscribe } from 'unstated';
-import AppContainer from '../container/AppContainer';
 
 export default class ForgotPassword extends React.Component {
   constructor(props) {
@@ -55,17 +53,13 @@ export default class ForgotPassword extends React.Component {
               </label>
             </div>
             <div className='forgot__section'>
-              <Subscribe to={[AppContainer]}>
-                {app => (
-                  <button
-                    className='forgot__submit'
-                    disabled={this.state.disabled}
-                    onClick={() => app.sendPasswordResetEmail(this.state.user)}
-                  >
-                    <span>送信する</span>
-                  </button>
-                )}
-              </Subscribe>
+              <button
+                className='forgot__submit'
+                disabled={this.state.disabled}
+                onClick={() => console.log('send email')}
+              >
+                <span>送信する</span>
+              </button>
             </div>
           </form>
         </div>
