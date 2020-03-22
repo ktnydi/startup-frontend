@@ -23,4 +23,12 @@ class Provider extends React.Component {
   }
 }
 
-export { Provider }
+const Connect = (Component) => (
+  (props) => (
+    <AppContext.Consumer>
+      {context => <Component store={context} {...props} />}
+    </AppContext.Consumer>
+  )
+)
+
+export { Provider, Connect }
