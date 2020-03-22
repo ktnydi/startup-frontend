@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { Connect } from '../context/Context';
 
-export default class SignIn extends React.Component {
+class SignIn extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -85,7 +86,9 @@ export default class SignIn extends React.Component {
               <button
                 className='sign__submit'
                 disabled={this.state.disabled}
-                onClick={() => console.log('login')}
+                onClick={() => {
+                  this.props.store.signInWithEmail(this.state.user, this.props.history)
+                }}
               >
                 <span>ログインする</span>
               </button>
@@ -99,3 +102,5 @@ export default class SignIn extends React.Component {
     )
   }
 }
+
+export default withRouter(Connect(SignIn));

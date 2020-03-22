@@ -57,6 +57,21 @@ class Provider extends React.Component {
       })
   }
 
+  signInWithEmail = (user, history) => {
+    const {email, password} = user
+    auth.signInWithEmailAndPassword(email, password)
+      .then(response => {
+        this.setState({
+          userSignIn: true,
+        })
+
+        history.push('/')
+      })
+      .catch(error => {
+        window.alert(`${error.code}\n${error.message}`)
+      })
+  }
+
   render() {
     const store = {
       ...this.state,
@@ -65,6 +80,7 @@ class Provider extends React.Component {
       showMenu: this.showMenu,
       closeMenu: this.closeMenu,
       signUpWithEmail: this.signUpWithEmail,
+      signInWithEmail: this.signInWithEmail,
     }
 
     return(
