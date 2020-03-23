@@ -80,6 +80,12 @@ class Provider extends React.Component {
     history.push('/')
   }
 
+  userAuthState = (user) => {
+    this.setState({
+      userSignIn: !!user,
+    })
+  }
+
   render() {
     const store = {
       ...this.state,
@@ -90,6 +96,7 @@ class Provider extends React.Component {
       signUpWithEmail: this.signUpWithEmail,
       signInWithEmail: this.signInWithEmail,
       signOut: this.signOut,
+      userAuthState: this.userAuthState,
     }
 
     return(
