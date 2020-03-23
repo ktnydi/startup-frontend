@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Connect } from '../context/Context';
 import { Icon, Avatar, makeStyles } from '@material-ui/core';
 import avatar from '../asset/image/avatar.png';
@@ -73,7 +73,7 @@ const CurrentUser = Connect((props) => {
   );
 });
 
-const Popup = Connect((props) => {
+const Popup = withRouter(Connect((props) => {
   if (!props.store.popup) { return false }
 
   return(
@@ -88,13 +88,13 @@ const Popup = Connect((props) => {
             <Link to='/dashboard' className='popup__link'>ダッシュボード</Link>
           </li>
           <li className='popup__item'>
-            <Link to='/logout' className='popup__link'>ログアウト</Link>
+            <div className='popup__link' onClick={() => props.store.signOut(props.history)}>ログアウト</div>
           </li>
         </ul>
       </nav>
     </div>
   );
-});
+}));
 
 const Notification = Connect((props) => {
   const classes = useStyles();
