@@ -11,3 +11,9 @@ exports.createProfile = functions.auth.user().onCreate(user => {
     location: '',
   });
 })
+
+exports.deleteProfile = functions.auth.user().onDelete(user => {
+  const uid = user.uid;
+  let docRef = admin.firestore().collection('users').doc(uid)
+  docRef.delete();
+})
