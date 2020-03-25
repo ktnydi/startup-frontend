@@ -1,4 +1,6 @@
 import React from 'react';
+import { Connect } from '../context/Context';
+import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import theme from '../asset/Theme';
 
@@ -51,7 +53,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Withdraw() {
+function Withdraw(props) {
 
   const classes = useStyles();
 
@@ -66,7 +68,7 @@ export default function Withdraw() {
       <div className={classes.submit}>
         <button
           type='button'
-          onClick={() => console.log('withdraw account')}
+          onClick={() => props.store.withdraw(props.history)}
           className={classes.deleteBtn}
         >
           <span>退会する</span>
@@ -75,3 +77,5 @@ export default function Withdraw() {
     </div>
   )
 }
+
+export default withRouter(Connect(Withdraw));
