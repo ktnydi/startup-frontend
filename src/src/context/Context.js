@@ -80,6 +80,16 @@ class Provider extends React.Component {
     history.push('/')
   }
 
+  withdraw = (history) => {
+    auth.currentUser.delete()
+      .then(() => {
+        history.push('/')
+      })
+      .catch(error => {
+        window.alert(`${error.code}\n${error.message}`)
+      })
+  }
+
   userAuthState = (user) => {
     this.setState({
       userSignIn: !!user,
@@ -97,6 +107,7 @@ class Provider extends React.Component {
       signInWithEmail: this.signInWithEmail,
       signOut: this.signOut,
       userAuthState: this.userAuthState,
+      withdraw: this.withdraw,
     }
 
     return(
