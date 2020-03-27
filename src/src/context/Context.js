@@ -1,5 +1,5 @@
 import React from 'react';
-import { auth } from '../firebase';
+import { auth, storage } from '../firebase';
 
 const AppContext = React.createContext();
 
@@ -80,6 +80,20 @@ class Provider extends React.Component {
     history.push('/')
   }
 
+  updateAvatar = async (file) => {
+    const storageRef = storage.ref()
+    const avatarImageRef = storageRef.child(`images/${auth.currentUser.uid}.jpg`)
+    const snapshot = await avatarImageRef.put(file)
+    if (snapshot.state !== 'success') { return false }
+    
+    const url = await avatarImageRef.getDownloadURL()
+    auth.currentUser.updateProfile({
+      photoURL: url,
+    })
+
+    return url
+  }
+
   withdraw = (history) => {
     auth.currentUser.delete()
       .then(() => {
@@ -106,6 +120,7 @@ class Provider extends React.Component {
       signUpWithEmail: this.signUpWithEmail,
       signInWithEmail: this.signInWithEmail,
       signOut: this.signOut,
+      updateAvatar: this.updateAvatar,
       userAuthState: this.userAuthState,
       withdraw: this.withdraw,
     }
