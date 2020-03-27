@@ -7,4 +7,9 @@ services:
     command: sh -c "cd src && npm start"
     ports:
       - 3000:3000
-
+  gcloud:
+    image: google/cloud-sdk:latest
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html/src
+    tty: true
