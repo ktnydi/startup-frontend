@@ -89,10 +89,10 @@ class Provider extends React.Component {
     history.push('/')
   }
 
-  updateAvatar = async (file) => {
+  updateAvatar = async (imageFile) => {
     const storageRef = storage.ref()
     const avatarImageRef = storageRef.child(`images/${auth.currentUser.uid}.jpg`)
-    const snapshot = await avatarImageRef.put(file)
+    const snapshot = await avatarImageRef.put(imageFile)
     if (snapshot.state !== 'success') { return false }
     
     const url = await avatarImageRef.getDownloadURL()
