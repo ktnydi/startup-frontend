@@ -108,12 +108,12 @@ class Provider extends React.Component {
   }
 
   updateProfile = (user) => {
-    const {name, introduce, skill, location} = user
+    const {displayName, introduce, skill, location} = user
     const currentUser = auth.currentUser
 
-    if (name) {
+    if (displayName) {
       currentUser.updateProfile({
-        displayName: name,
+        displayName: displayName,
       })
     }
 

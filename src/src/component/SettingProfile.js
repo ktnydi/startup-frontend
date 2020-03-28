@@ -39,15 +39,15 @@ const useStyles = makeStyles({
 });
 
 function Profile(props) {
-  const [name, setName] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [introduce, setIntroduce] = useState('');
   const [skill, setSkill] = useState('');
-  const [list, setList] = useState([]);
+  const [skillList, setSkillList] = useState([]);
   const [location, setLocation] = useState('');
   const user = {
-    name: name,
+    displayName: displayName,
     introduce: introduce,
-    skill: list,
+    skill: skillList,
     location: location
   }
 
@@ -55,14 +55,14 @@ function Profile(props) {
 
   React.useEffect(() => {
     const currentUser = auth.currentUser
-    setName(currentUser.displayName);
+    setDisplayName(currentUser.displayName);
 
     const docRef = firestore.collection('users').doc(currentUser.uid);
     docRef.get()
       .then(doc => {
         const data = doc.data();
         setIntroduce(data.introduce);
-        setList(data.skill);
+        setSkillList(data.skill);
         setLocation(data.location);
       })
       .catch(error => {
@@ -74,16 +74,16 @@ function Profile(props) {
     if (e.keyCode !== 13) { return false }
     if (skill.length === 0) { return false }
 
-    const new_list = Object.assign([], list);
-    new_list.push(skill);
-    setList(new_list);
+    const new_skillList = Object.assign([], skillList);
+    new_skillList.push(skill);
+    setSkillList(new_skillList);
     setSkill('');
   }
 
   const removeListHandler = (e, index) => {
-    const new_list = Object.assign([], list);
-    new_list.splice(index, 1);
-    setList(new_list);
+    const new_skillList = Object.assign([], skillList);
+    new_skillList.splice(index, 1);
+    setSkillList(new_skillList);
     setSkill('');
   }
 
@@ -118,8 +118,8 @@ function Profile(props) {
               InputLabelProps={{
                 className: classes.label,
               }}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
             />
           </MuiThemeProvider>
         </div>
@@ -157,7 +157,7 @@ function Profile(props) {
               onKeyDown={(e) => addListHandler(e)}
             />
           </MuiThemeProvider>
-          { list.length > 0 && (
+          { skillList.length > 0 && (
             <div className='profile__skill'>
               <div className='profile__has'>
                 <span>保有スキル</span>
@@ -170,7 +170,7 @@ function Profile(props) {
               <nav className='profile__nav'>
                 <ul className='profile__list'>
                   {
-                    list.map((item, index) => (
+                    skillList.map((item, index) => (
                       <li
                         key={index}
                         className='profile__item'
