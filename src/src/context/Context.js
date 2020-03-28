@@ -1,5 +1,5 @@
 import React from 'react';
-import { auth, storage } from '../firebase';
+import { auth, firestore, storage } from '../firebase';
 
 const AppContext = React.createContext();
 
@@ -107,6 +107,20 @@ class Provider extends React.Component {
     })
   }
 
+  updateProfile = (user) => {
+    const {name, introduce, skill, location} = user
+    const currentUser = auth.currentUser
+
+    if (name) {
+      currentUser.updateProfile({
+        displayName: name,
+      })
+    }
+
+    let docRef = firestore.collection('users').doc(currentUser.uid)
+    docRef.update({introduce, skill, location})
+  }
+
   withdraw = (history) => {
     auth.currentUser.delete()
       .then(() => {
@@ -143,6 +157,7 @@ class Provider extends React.Component {
       signOut: this.signOut,
       updateAvatar: this.updateAvatar,
       userAuthState: this.userAuthState,
+      updateProfile: this.updateProfile,
       withdraw: this.withdraw,
     }
 
