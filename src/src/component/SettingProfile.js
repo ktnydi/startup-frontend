@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import Tooltip from '../common/Tooltip';
 import theme from '../asset/Theme';
-import { auth } from '../firebase';
+import { auth, firestore } from '../firebase';
 import { Connect } from '../context/Context';
 
 const useStyles = makeStyles({
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
 });
 
 function Profile(props) {
-  const [name, setName] = useState('ゲストユーザー');
+  const [name, setName] = useState('');
   const [introduce, setIntroduce] = useState('');
   const [skill, setSkill] = useState('');
   const [list, setList] = useState([]);
@@ -47,11 +47,28 @@ function Profile(props) {
   const user = {
     name: name,
     introduce: introduce,
-    skill: list.join(','),
+    skill: list,
     location: location
   }
 
   const classes = useStyles();
+
+  React.useEffect(() => {
+    const currentUser = auth.currentUser
+    setName(currentUser.displayName);
+
+    const docRef = firestore.collection('users').doc(currentUser.uid);
+    docRef.get()
+      .then(doc => {
+        const data = doc.data();
+        setIntroduce(data.introduce);
+        setList(data.skill);
+        setLocation(data.location);
+      })
+      .catch(error => {
+        window.alert(`${error.code}\n${error.message}`)
+      })
+  }, [])
 
   const addListHandler = (e) => {
     if (e.keyCode !== 13) { return false }
@@ -101,7 +118,7 @@ function Profile(props) {
               InputLabelProps={{
                 className: classes.label,
               }}
-              defaultValue={name}
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </MuiThemeProvider>
@@ -118,7 +135,7 @@ function Profile(props) {
               InputLabelProps={{
                 className: classes.label,
               }}
-              defaultValue={introduce}
+              value={introduce}
               onChange={(e) => setIntroduce(e.target.value)}
             />
           </MuiThemeProvider>
@@ -179,7 +196,7 @@ function Profile(props) {
               InputLabelProps={{
                 className: classes.label,
               }}
-              defaultValue={location}
+              value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
           </MuiThemeProvider>
@@ -187,7 +204,7 @@ function Profile(props) {
         <div className='profile__submit'>
           <button
             type='button'
-            onClick={() => console.log('update profile')}
+            onClick={() => props.store.updateProfile(user)}
             className='profile__update-btn'
           >
             <span>変更する</span>
@@ -198,4 +215,4 @@ function Profile(props) {
   );
 }
 
-export default Connect(Profile)
+export default Connect(Profile);
