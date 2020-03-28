@@ -121,6 +121,10 @@ class Provider extends React.Component {
     docRef.update({introduce, skill, location})
   }
 
+  updateEmail = (newEmail) => {
+    auth.currentUser.updateEmail(newEmail)
+  }
+
   withdraw = (history) => {
     auth.currentUser.delete()
       .then(() => {
@@ -158,6 +162,7 @@ class Provider extends React.Component {
       updateAvatar: this.updateAvatar,
       userAuthState: this.userAuthState,
       updateProfile: this.updateProfile,
+      updateEmail: this.updateEmail,
       withdraw: this.withdraw,
     }
 

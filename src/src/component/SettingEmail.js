@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, MuiThemeProvider, makeStyles } from '@material-ui/core';
 import theme from '../asset/Theme';
+import { Connect } from '../context/Context';
 
 const useStyles = makeStyles({
   label: {
@@ -54,11 +55,8 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Email() {
-  const [email, setEmail] = useState('guest@example.com');
-  const user = {
-    email: email,
-  }
+function Email(props) {
+  const [email, setEmail] = useState('');
 
   const classes = useStyles();
 
@@ -76,7 +74,7 @@ export default function Email() {
               InputLabelProps={{
                 className: classes.label,
               }}
-              defaultValue={email}
+              defaultValue={props.store.user.email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </MuiThemeProvider>
@@ -84,7 +82,7 @@ export default function Email() {
         <div className={classes.submit}>
           <button
             type='button'
-            onClick={() => console.log('update email')}
+            onClick={() => props.store.updateEmail(email)}
             className={classes.updateBtn}
           >
             <span>変更する</span>
@@ -94,3 +92,5 @@ export default function Email() {
     </div>
   )
 }
+
+export default Connect(Email);
