@@ -39,7 +39,6 @@ const useStyles = makeStyles({
 });
 
 function Profile(props) {
-  const [image, setImage] = useState('');
   const [name, setName] = useState('ゲストユーザー');
   const [introduce, setIntroduce] = useState('');
   const [skill, setSkill] = useState('');
@@ -53,16 +52,6 @@ function Profile(props) {
   }
 
   const classes = useStyles();
-
-  React.useEffect(() => {
-    setImage(auth.currentUser.photoURL);
-  }, [])
-
-  const uploadAvatarHandler = async (e) => {
-    const file = e.target.files[0];
-    const pathToImage = await props.store.updateAvatar(file);
-    setImage(pathToImage);
-  }
 
   const addListHandler = (e) => {
     if (e.keyCode !== 13) { return false }
@@ -86,15 +75,14 @@ function Profile(props) {
       <form onSubmit={(e) => e.preventDefault(e)}>
         <div className='profile__section'>
           <div className='profile__image'>
-          <Avatar src={image}  className={classes.avatar} />
+          <Avatar src={props.store.user.photoURL}  className={classes.avatar} />
             <div>
               <label  className='profile__change'>
                 <input
                   type='file'
                   name='image'
-                  defaultValue={image}
                   placeholder=''
-                  onChange={(e) => uploadAvatarHandler(e)}
+                  onChange={(e) => props.store.updateAvatar(e.target.files[0])}
                   style={{display: 'none'}}
                 />
                 <span>画像を変更</span>

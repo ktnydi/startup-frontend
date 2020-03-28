@@ -7,6 +7,7 @@ class Provider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: null,
       userSignIn: false,
       notification: false,
       popup: false,
@@ -50,6 +51,10 @@ class Provider extends React.Component {
           userSignIn: true,
         });
 
+        const {uid, email, displayName, photoURL} = response.user
+        const newUser = {uid, email, displayName, photoURL}
+        this.setState({ user: newUser })
+
         history.push('/');
       })
       .catch(error => {
@@ -64,6 +69,10 @@ class Provider extends React.Component {
         this.setState({
           userSignIn: true,
         })
+
+        const {uid, email, displayName, photoURL} = response.user
+        const newUser = {uid, email, displayName, photoURL}
+        this.setState({ user: newUser })
 
         history.push('/')
       })
@@ -91,7 +100,11 @@ class Provider extends React.Component {
       photoURL: url,
     })
 
-    return url
+    const newUser = Object.assign({}, this.state.user)
+    newUser.photoURL = url
+    this.setState({
+      user: newUser,
+    })
   }
 
   withdraw = (history) => {
@@ -108,6 +121,14 @@ class Provider extends React.Component {
     this.setState({
       userSignIn: !!user,
     })
+    if (user) {
+      const {uid, email, displayName, photoURL} = user
+      const newUser = {uid, email, displayName, photoURL}
+
+      this.setState({
+        user: newUser,
+      })
+    }
   }
 
   render() {
