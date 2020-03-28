@@ -7,8 +7,9 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import Tooltip from '../common/Tooltip';
-import avatar from '../asset/image/avatar.png';
 import theme from '../asset/Theme';
+import { auth } from '../firebase';
+import { Connect } from '../context/Context';
 
 const useStyles = makeStyles({
   avatar: {
@@ -37,8 +38,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Profile() {
-  const [image, setImage] = useState('');
+function Profile(props) {
   const [name, setName] = useState('ゲストユーザー');
   const [introduce, setIntroduce] = useState('');
   const [skill, setSkill] = useState('');
@@ -75,15 +75,14 @@ export default function Profile() {
       <form onSubmit={(e) => e.preventDefault(e)}>
         <div className='profile__section'>
           <div className='profile__image'>
-            <Avatar src={avatar}  className={classes.avatar} />
+          <Avatar src={props.store.user.photoURL}  className={classes.avatar} />
             <div>
               <label  className='profile__change'>
                 <input
                   type='file'
                   name='image'
-                  defaultValue={image}
                   placeholder=''
-                  onChange={(e) => setImage(e.target.value)}
+                  onChange={(e) => props.store.updateAvatar(e.target.files[0])}
                   style={{display: 'none'}}
                 />
                 <span>画像を変更</span>
@@ -198,3 +197,5 @@ export default function Profile() {
     </div>
   );
 }
+
+export default Connect(Profile)

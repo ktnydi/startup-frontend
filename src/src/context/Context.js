@@ -1,5 +1,5 @@
 import React from 'react';
-import { auth } from '../firebase';
+import { auth, storage } from '../firebase';
 
 const AppContext = React.createContext();
 
@@ -7,6 +7,7 @@ class Provider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: null,
       userSignIn: false,
       notification: false,
       popup: false,
@@ -50,6 +51,10 @@ class Provider extends React.Component {
           userSignIn: true,
         });
 
+        const {uid, email, displayName, photoURL} = response.user
+        const newUser = {uid, email, displayName, photoURL}
+        this.setState({ user: newUser })
+
         history.push('/');
       })
       .catch(error => {
@@ -64,6 +69,10 @@ class Provider extends React.Component {
         this.setState({
           userSignIn: true,
         })
+
+        const {uid, email, displayName, photoURL} = response.user
+        const newUser = {uid, email, displayName, photoURL}
+        this.setState({ user: newUser })
 
         history.push('/')
       })
@@ -80,6 +89,24 @@ class Provider extends React.Component {
     history.push('/')
   }
 
+  updateAvatar = async (imageFile) => {
+    const storageRef = storage.ref()
+    const avatarImageRef = storageRef.child(`images/${auth.currentUser.uid}.jpg`)
+    const snapshot = await avatarImageRef.put(imageFile)
+    if (snapshot.state !== 'success') { return false }
+    
+    const url = await avatarImageRef.getDownloadURL()
+    auth.currentUser.updateProfile({
+      photoURL: url,
+    })
+
+    const newUser = Object.assign({}, this.state.user)
+    newUser.photoURL = url
+    this.setState({
+      user: newUser,
+    })
+  }
+
   withdraw = (history) => {
     auth.currentUser.delete()
       .then(() => {
@@ -94,6 +121,14 @@ class Provider extends React.Component {
     this.setState({
       userSignIn: !!user,
     })
+    if (user) {
+      const {uid, email, displayName, photoURL} = user
+      const newUser = {uid, email, displayName, photoURL}
+
+      this.setState({
+        user: newUser,
+      })
+    }
   }
 
   render() {
@@ -106,6 +141,7 @@ class Provider extends React.Component {
       signUpWithEmail: this.signUpWithEmail,
       signInWithEmail: this.signInWithEmail,
       signOut: this.signOut,
+      updateAvatar: this.updateAvatar,
       userAuthState: this.userAuthState,
       withdraw: this.withdraw,
     }
