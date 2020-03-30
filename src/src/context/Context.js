@@ -1,4 +1,5 @@
 import React from 'react';
+import firebase from 'firebase/app';
 import { auth, firestore, storage } from '../firebase';
 
 const AppContext = React.createContext();
@@ -125,6 +126,20 @@ class Provider extends React.Component {
     auth.currentUser.updateEmail(newEmail)
   }
 
+  updatePassword = (user) => {
+    const {password, newPassword, newPasswordConfirm} = user
+    if (newPassword !== newPasswordConfirm) { return false }
+
+    const credential = firebase.auth.EmailAuthProvider.credential(this.state.user.email, password)
+
+    auth.currentUser.reauthenticateWithCredential(credential).then(response => {
+      auth.currentUser.updatePassword(newPassword)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
+
   withdraw = (history) => {
     auth.currentUser.delete()
       .then(() => {
@@ -163,6 +178,7 @@ class Provider extends React.Component {
       userAuthState: this.userAuthState,
       updateProfile: this.updateProfile,
       updateEmail: this.updateEmail,
+      updatePassword: this.updatePassword,
       withdraw: this.withdraw,
     }
 
