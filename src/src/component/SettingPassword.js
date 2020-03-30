@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, MuiThemeProvider, makeStyles } from '@material-ui/core';
 import theme from '../asset/Theme';
+import { Connect } from '../context/Context';
 
 const useStyles = makeStyles({
   label: {
@@ -54,7 +55,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Password() {
+function Password(props) {
   const [password, setPassword] = useState('')
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
@@ -122,7 +123,7 @@ export default function Password() {
       <div className={classes.submit}>
         <button
           type='button'
-          onClick={() => console.log('update password')}
+          onClick={() => props.store.updatePassword(user)}
           className={classes.updateBtn}
         >
           <span>変更する</span>
@@ -131,3 +132,5 @@ export default function Password() {
     </div>
   )
 }
+
+export default Connect(Password);
