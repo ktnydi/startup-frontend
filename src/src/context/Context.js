@@ -32,35 +32,38 @@ class Provider extends React.Component {
     this.setState({ menu: false })
   }
 
-  signUpWithEmail = (user, history) => {
+  signUpWithEmail = async (user, history) => {
     const {name, email, password, password_confirm} = user
 
     if (password !== password_confirm) {
       return window.alert('パスワードを一致させてください。')
     }
 
-    auth.createUserWithEmailAndPassword(email, password)
-      .then(response => {
-        response.user.updateProfile({
-          displayName: name,
-        })
-        .catch(error => {
-          window.alert(`${error.code}\n${error.message}`)
-        })
-
-        this.setState({
-          userSignIn: true,
-        });
-
-        const {uid, email, displayName, photoURL} = response.user
-        const newUser = {uid, email, displayName, photoURL}
-        this.setState({ user: newUser })
-
-        history.push('/');
+    try {
+      const credential = await auth.createUserWithEmailAndPassword(email, password)
+      const gsReference = storage.refFromURL('gs://startup-c48db.appspot.com/images/default.jpg')
+      const url = await gsReference.getDownloadURL()
+      
+      await credential.user.updateProfile({
+        displayName: name,
+        photoURL: url,
       })
-      .catch(error => {
-        window.alert(`${error.code}\n${error.message}`)
+
+      const user = credential.user
+      this.setState({
+        userSignIn: true,
+        user: {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL
+        },
       })
+      
+      history.push('/');
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   signInWithEmail = (user, history) => {
