@@ -13,7 +13,25 @@ class Provider extends React.Component {
       notification: false,
       popup: false,
       menu: false,
+      notice: {
+        success: {
+          active: false,
+          message: '',
+        }, 
+      }
     }
+  }
+
+  fadeInOutSuccessNotice = (message) => {
+    const newNotice = Object.assign({}, this.state.notice)
+    newNotice.success.active = true
+    newNotice.success.message = message
+    this.setState({notice: newNotice})
+
+    setTimeout(() => {
+      newNotice.success.active = false
+      this.setState({notice: newNotice})
+    }, 6000)
   }
 
   showPopup = () => {
