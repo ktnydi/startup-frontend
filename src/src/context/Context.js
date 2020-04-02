@@ -109,8 +109,9 @@ class Provider extends React.Component {
       })
       
       history.push('/');
+      this.fadeInOutSuccessNotice('アカウントを作成しました。')
     } catch (error) {
-      console.log(error)
+      this.fadeInOrOutFailureNotice({message: error.message, type: 'fadeIn'})
     }
   }
 
@@ -127,9 +128,10 @@ class Provider extends React.Component {
         this.setState({ user: newUser })
 
         history.push('/')
+        this.fadeInOutSuccessNotice('お帰りなさい。')
       })
       .catch(error => {
-        window.alert(`${error.code}\n${error.message}`)
+        this.fadeInOrOutFailureNotice({message: error.message, type: 'fadeIn'})
       })
   }
 
@@ -139,6 +141,7 @@ class Provider extends React.Component {
       userSignIn: false,
     })
     history.push('/')
+    this.fadeInOutSuccessNotice('ログアウトしました。')
   }
 
   updateAvatar = async (imageFile) => {
@@ -157,6 +160,7 @@ class Provider extends React.Component {
     this.setState({
       user: newUser,
     })
+    this.fadeInOutSuccessNotice('画像を更新しました。')
   }
 
   updateProfile = (user) => {
@@ -171,10 +175,12 @@ class Provider extends React.Component {
 
     let docRef = firestore.collection('users').doc(currentUser.uid)
     docRef.update({introduce, skill, location})
+    this.fadeInOutSuccessNotice('プロフィールを更新しました。')
   }
 
   updateEmail = (newEmail) => {
     auth.currentUser.updateEmail(newEmail)
+    this.fadeInOutSuccessNotice('メールアドレスを更新しました。')
   }
 
   updatePassword = (user) => {
@@ -185,9 +191,10 @@ class Provider extends React.Component {
 
     auth.currentUser.reauthenticateWithCredential(credential).then(response => {
       auth.currentUser.updatePassword(newPassword)
+      this.fadeInOutSuccessNotice('パスワードを更新しました。')
     })
     .catch(error => {
-      console.log(error)
+      this.fadeInOrOutFailureNotice({message: error.message, type: 'fadeIn'})
     })
   }
 
@@ -195,9 +202,11 @@ class Provider extends React.Component {
     auth.currentUser.delete()
       .then(() => {
         history.push('/')
+        this.fadeInOutSuccessNotice('ご利用ありがとうございました。')
       })
       .catch(error => {
         window.alert(`${error.code}\n${error.message}`)
+        this.fadeInOrOutFailureNotice({message: error.message, type: 'fadeIn'})
       })
   }
 
