@@ -25,6 +25,27 @@ const Success = Connect((props) => {
   );
 });
 
+const Failure = Connect((props) => {
+  const {message, store} = props;
+  const classes = useStyles();
+  const spring = useSpring({
+    transform: store.notice.failure.active ? 'translateX(0)' : 'translateX(400px)',
+  });
+
+  return(
+    <animated.div
+      onClick={() => store.fadeInOrOutFailureNotice({type: 'fadeOut'})}
+      style={{...spring}}
+      className={classes.failure}
+    >
+      <span className={classes.text}>
+        <Icon className={classes.icon}>priority_high</Icon>
+        {message}
+      </span>
+    </animated.div>
+  );
+});
+
 const useStyles = makeStyles({
   success: {
     position: 'fixed',
@@ -36,6 +57,19 @@ const useStyles = makeStyles({
     padding: '30px',
     borderRadius: 3,
     backgroundColor: theme.palette.primary.main,
+    color: 'white',
+    fontSize: '1.3rem',
+  },
+  failure: {
+    position: 'fixed',
+    bottom: 50,
+    right: 50,
+    zIndex: 100,
+    display: 'inline-block',
+    maxWidth: 300,
+    padding: '30px',
+    borderRadius: 3,
+    backgroundColor: theme.palette.warning.main,
     color: 'white',
     fontSize: '1.3rem',
   },
@@ -51,4 +85,4 @@ const useStyles = makeStyles({
   },
 });
 
-export { Success };
+export { Success, Failure };

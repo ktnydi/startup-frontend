@@ -18,6 +18,10 @@ class Provider extends React.Component {
           active: false,
           message: '',
         }, 
+        failure: {
+          active: false,
+          message: '',
+        }
       }
     }
   }
@@ -32,6 +36,30 @@ class Provider extends React.Component {
       newNotice.success.active = false
       this.setState({notice: newNotice})
     }, 6000)
+  }
+
+  fadeInOrOutFailureNotice = ({
+    message='',
+    type /*= 'fadeIn' or 'fadeOut' */
+  }) => {
+    const types = ['fadeIn', 'fadeOut']
+    const newNotice = Object.assign({}, this.state.notice)
+
+    try {
+      if (!types.includes(type)) {
+        throw new TypeError('invalid arguments, type property can specify only "fadeIn" or "fadeOut"')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+
+    if (type === 'fadeIn') {
+      newNotice.failure.message = message
+      newNotice.failure.active = true
+    }
+    if (type === 'fadeOut') { newNotice.failure.active = false }
+
+    this.setState({notice: newNotice})
   }
 
   showPopup = () => {
@@ -188,6 +216,7 @@ class Provider extends React.Component {
   render() {
     const store = {
       ...this.state,
+      fadeInOrOutFailureNotice: this.fadeInOrOutFailureNotice,
       showPopup: this.showPopup,
       closePopup: this.closePopup,
       showMenu: this.showMenu,
