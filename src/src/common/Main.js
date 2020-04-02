@@ -13,10 +13,14 @@ import EditPassword from '../component/EditPassword';
 import Project from '../component/Project';
 import ProjectDetail from '../component/ProjectDetail';
 import ProjectCreate from '../component/ProjectCreate';
+import { Success, Failure } from '../common/Notice';
+import { Connect } from '../context/Context';
 
-export default function Main() {
+function Main(props) {
   return(
     <main>
+      <Success message={props.store.notice.success.message} />
+      <Failure message={props.store.notice.failure.message} />
       <Switch>
         <Route path='/signup'>
           <SignUp />
@@ -49,3 +53,5 @@ export default function Main() {
     </main>
   )
 }
+
+export default Connect(Main)
