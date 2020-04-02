@@ -29,6 +29,7 @@ class Provider extends React.Component {
   fadeInOutSuccessNotice = (message) => {
     const newNotice = Object.assign({}, this.state.notice)
     newNotice.success.active = true
+    newNotice.failure.active = false
     newNotice.success.message = message
     this.setState({notice: newNotice})
 
@@ -53,6 +54,7 @@ class Provider extends React.Component {
       console.error(error)
     }
 
+    newNotice.success.active = false
     if (type === 'fadeIn') {
       newNotice.failure.message = message
       newNotice.failure.active = true
