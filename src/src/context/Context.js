@@ -1,6 +1,7 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import { auth, firestore, storage } from '../firebase';
+import shortid from 'shortid';
 
 const AppContext = React.createContext();
 
@@ -228,6 +229,7 @@ class Provider extends React.Component {
     try {
       const {title, items, about} = project
       const docRef = await firestore.collection('projects').add({
+        id: shortid.generate(),
         title,
         items,
         about,
