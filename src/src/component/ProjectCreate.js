@@ -1,9 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { TextareaAutosize, Icon, Tooltip } from '@material-ui/core';
 import TagField from '../common/TagField';
 import Markdown from '../common/Markdown';
 import { makeStyles } from '@material-ui/core/styles';
 import theme from '../asset/Theme';
+import { Connect } from '../context/Context';
 
 const defaultText = [
   '## 内容',
@@ -13,7 +15,7 @@ const defaultText = [
   '## 募集人数',
 ].join('\n\n')
 
-export default function ProjectCreate() {
+function ProjectCreate(props) {
   const [title, setTitle] = React.useState('');
   const [tag, setTag] = React.useState('');
   const [items, setItems] = React.useState([]);
@@ -137,7 +139,13 @@ export default function ProjectCreate() {
       </div>
       <div className={classes.section}>
         <div className={classes.submit}>
-          <button type='button' className={classes.post}>
+          <button
+            type='button'
+            className={classes.post}
+            onClick={
+              () => props.store.createProject({title, items, about}, props.history)
+            }
+          >
             メンバーを募集する
           </button>
         </div>
@@ -266,3 +274,5 @@ const useStyles = makeStyles({
     },
   },
 });
+
+export default withRouter(Connect(ProjectCreate));
