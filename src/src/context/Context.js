@@ -224,6 +224,24 @@ class Provider extends React.Component {
     }
   }
 
+  createProject = async (project, history) => {
+    try {
+      const {title, items, about} = project
+      const docRef = await firestore.collection('projects').add({
+        title,
+        items,
+        about,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        founderUid: this.state.user.uid,
+      })
+      console.log(docRef)
+      this.fadeInOutSuccessNotice('プロジェクトを作成しました。')
+      history.push('/')
+    } catch (error) {
+      this.fadeInOrOutFailureNotice({message: error.message, type: 'fadeIn'})
+    }
+  }
+
   render() {
     const store = {
       ...this.state,
@@ -241,6 +259,7 @@ class Provider extends React.Component {
       updateEmail: this.updateEmail,
       updatePassword: this.updatePassword,
       withdraw: this.withdraw,
+      createProject: this.createProject,
     }
 
     return(
