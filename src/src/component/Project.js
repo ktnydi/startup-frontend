@@ -5,17 +5,32 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useSpring, animated } from 'react-spring';
 import theme from '../asset/Theme';
 import itemsData from '../data/itemsData';
+import Indicator from '../common/Indicator';
+import { Connect } from '../context/Context';
 
-export default function Project() {
+function Project(props) {
   const [items, setItems] = React.useState(itemsData);
   const [filterItems, setFilterItems] = React.useState([]);
   const [action, setAction] = React.useState(0);
   const [search, setSearch] = React.useState('');
+  const [loading, setLoading] = React.useState(true)
   const classes = useStyles();
 
   const actions = ['new', 'old', 'pv'];
 
   React.useEffect(() => {
+    const fetchItems = async () => {
+      return await props.store.fetchProjects();
+    }
+    fetchItems().then((items) => {
+      setItems(items)
+      setFilterItems(items);
+      setLoading(false)
+    })
+  }, [])
+
+  React.useEffect(() => {
+    if (loading) { return }
     setFilterItems(items);
   }, [items])
 
@@ -85,7 +100,7 @@ export default function Project() {
             PV順
           </button>
         </div>
-        <ProjectList items={filterItems} />
+        {loading ? <Indicator size={30} /> : <ProjectList items={filterItems} />}
       </div>
     </div>
   )
@@ -286,3 +301,5 @@ const useStyles = makeStyles({
     fontWeight: 'bolder',
   },
 })
+
+export default Connect(Project);
