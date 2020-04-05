@@ -225,6 +225,15 @@ class Provider extends React.Component {
     }
   }
 
+  fetchProjects = async () => {
+    const querySnapshot = await firestore.collection('projects').orderBy('createdAt', 'desc').get()
+    return querySnapshot.docs.map(doc => {
+      const project = doc.data()
+      project.createdAt = project.createdAt.toDate().getTime()
+      return project
+    })
+  }
+
   createProject = async (project, history) => {
     try {
       const {title, items, about} = project
@@ -261,6 +270,7 @@ class Provider extends React.Component {
       updateEmail: this.updateEmail,
       updatePassword: this.updatePassword,
       withdraw: this.withdraw,
+      fetchProjects: this.fetchProjects,
       createProject: this.createProject,
     }
 
