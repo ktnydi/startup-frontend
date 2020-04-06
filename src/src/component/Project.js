@@ -36,8 +36,20 @@ function Project(props) {
     if (e.type === 'keydown' && e.keyCode !== 13) { return false }
 
     const filterItems = items.filter((item) => {
-      return item.about.indexOf(search) >= 0
+      const keys = ['title', 'items', 'about'];
+      return keys.some(key => {
+        const value = String(item[key]).toUpperCase();
+        return value.indexOf(search.toUpperCase()) >= 0;
+      })
     });
+
+    if (!desc) {
+      filterItems.sort((prevItem, nextItem) => {
+        const judge = prevItem['createdAt'] - nextItem['createdAt'];
+        return judge
+      });
+    }
+
     setFilterItems(filterItems);
   }
 
