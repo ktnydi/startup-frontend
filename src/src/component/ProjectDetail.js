@@ -6,7 +6,6 @@ import { useSpring, animated } from 'react-spring';
 import Markdown from '../common/Markdown';
 import { dateTime } from '../helper/DateFormatter';
 import theme from '../asset/Theme';
-import itemsData from '../data/itemsData';
 import { Connect } from '../context/Context';
 
 function ProjectDetail({store}) {
