@@ -11,12 +11,10 @@ import { Connect } from '../context/Context';
 function Project(props) {
   const [items, setItems] = React.useState(itemsData);
   const [filterItems, setFilterItems] = React.useState([]);
-  const [action, setAction] = React.useState(0);
+  const [desc, setDesc] = React.useState(true);
   const [search, setSearch] = React.useState('');
   const [loading, setLoading] = React.useState(true)
   const classes = useStyles();
-
-  const actions = ['new', 'old', 'pv'];
 
   React.useEffect(() => {
     const fetchItems = async () => {
@@ -43,14 +41,15 @@ function Project(props) {
     setFilterItems(filterItems);
   }
 
-  const orderItems = (e, key, desc = false) => {
-    const newItems = Object.assign([], search.length > 0 ? filterItems : items);
+  const orderItems = ({desc=false}) => {
+    const newItems = Object.assign([], filterItems);
     newItems.sort((prevItem, nextItem) => {
-      const judge = prevItem[key] - nextItem[key];
+      const judge = prevItem.createdAt - nextItem.createdAt;
+      
       return desc ? -judge : judge;
     });
-    search.length > 0 ? setFilterItems(newItems) : setItems(newItems);
-    setAction(actions.indexOf(e.target.name));
+    setFilterItems(newItems);
+    setDesc(desc);
   }
 
   return(
@@ -60,7 +59,6 @@ function Project(props) {
         <div className={classes.searchDispacher}>
           <input
             type='text'
-            name={actions[action]}
             placeholder='キーワードで検索する'
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -74,30 +72,19 @@ function Project(props) {
         <div className={classes.sortDispacher}>
           <button
             type='button'
-            name='new'
-            onClick={(e) => orderItems(e, 'createdAt', true)}
+            onClick={() => orderItems({desc: true})}
             className={classes.sortAction}
-            style={{opacity: action === 0 ? 1 : 0.6}}
+            style={{opacity: desc ? 1 : 0.6}}
           >
             新しい順
           </button>
           <button
             type='button'
-            name='old'
-            onClick={(e) => orderItems(e, 'createdAt')}
+            onClick={() => orderItems({desc: false})}
             className={classes.sortAction}
-            style={{opacity: action === 1 ? 1 : 0.6}}
+            style={{opacity: desc ? 0.6 : 1}}
           >
             古い順
-          </button>
-          <button
-            type='button'
-            name='pv'
-            onClick={(e) => orderItems(e, 'pv', true)}
-            className={classes.sortAction}
-            style={{opacity: action === 2 ? 1 : 0.6}}
-          >
-            PV順
           </button>
         </div>
         {loading ? <Indicator size={30} /> : <ProjectList items={filterItems} />}
