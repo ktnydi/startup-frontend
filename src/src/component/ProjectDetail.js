@@ -26,7 +26,7 @@ function ProjectDetail({store}) {
     <animated.div className={classes.root} style={props}>
       <div className={classes.container}>
         <div className={classes.articleHeader}>
-          <div>{dateTime(item.createdAt)}・{item.pv} Views</div>
+          <div>{dateTime(item.createdAt)}</div>
         </div>
         <div className={classes.articleContent}>
           <h2  className={classes.articleTitle}>{item.title}</h2>
