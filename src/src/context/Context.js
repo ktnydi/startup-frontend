@@ -140,6 +140,7 @@ class Provider extends React.Component {
     auth.signOut()
     this.setState({
       userSignIn: false,
+      popup: false,
     })
     history.push('/')
     this.fadeInOutSuccessNotice('ログアウトしました。')
