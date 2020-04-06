@@ -6,18 +6,21 @@ import { useSpring, animated } from 'react-spring';
 import Markdown from '../common/Markdown';
 import { dateTime } from '../helper/DateFormatter';
 import theme from '../asset/Theme';
-import itemsData from '../data/itemsData';
+import { Connect } from '../context/Context';
 
-export default function ProjectDetail() {
+function ProjectDetail({store}) {
   const [item, setItem] = React.useState('');
   const { id } = useParams();
   const classes = useStyles();
   const props = useSpring({opacity: 1, transform: 'translateY(0)', from: {opacity: 0, transform: 'translateY(50px)'}});
 
   React.useEffect(() => {
-    const item = itemsData.find(item => item.id === id);
-    setItem(item);
-  }, [id])
+    const fetchItem = async () => {
+      const item = await store.fetchProject(id);
+      setItem(item);
+    }
+    fetchItem();
+  }, [])
 
   return(
     <animated.div className={classes.root} style={props}>
@@ -143,3 +146,5 @@ const useStyles = makeStyles({
     },
   },
 });
+
+export default Connect(ProjectDetail);
