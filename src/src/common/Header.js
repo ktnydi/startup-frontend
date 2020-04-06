@@ -82,10 +82,10 @@ const Popup = withRouter(Connect((props) => {
       <nav className='popup__nav'>
         <ul className='popup__container'>
           <li className='popup__item'>
-            <Link to='/setting' className='popup__link'>アカウント設定</Link>
+            <Link to='/setting' className='popup__link' onClick={() => props.store.closePopup()}>アカウント設定</Link>
           </li>
           <li className='popup__item'>
-            <Link to='/dashboard' className='popup__link'>ダッシュボード</Link>
+            <Link to='/dashboard' className='popup__link' onClick={() => props.store.closePopup()}>ダッシュボード</Link>
           </li>
           <li className='popup__item'>
             <div className='popup__link' onClick={() => props.store.signOut(props.history)}>ログアウト</div>
