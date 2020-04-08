@@ -7,7 +7,7 @@ exports.createProfile = functions.auth.user().onCreate(async (user) => {
   const authedUser = await admin.auth().getUser(user.uid);
   const displayName = authedUser.displayName;
   const photoURL = authedUser.photoURL;
-  let docRef = admin.firestore().collection('users').doc(uid)
+  const docRef = admin.firestore().collection('users').doc(uid)
   docRef.set({
     displayName: displayName,
     photoURL: photoURL,
