@@ -176,7 +176,7 @@ class Provider extends React.Component {
     }
 
     let docRef = firestore.collection('users').doc(currentUser.uid)
-    docRef.update({introduce, skill, location})
+    docRef.update({displayName, introduce, skill, location})
     this.fadeInOutSuccessNotice('プロフィールを更新しました。')
   }
 
