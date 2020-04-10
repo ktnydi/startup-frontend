@@ -2,10 +2,15 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-exports.createProfile = functions.auth.user().onCreate(user => {
+exports.createProfile = functions.auth.user().onCreate(async (user) => {
   const uid = user.uid;
-  let docRef = admin.firestore().collection('users').doc(uid)
+  const authedUser = await admin.auth().getUser(user.uid);
+  const displayName = authedUser.displayName;
+  const photoURL = authedUser.photoURL;
+  const docRef = admin.firestore().collection('users').doc(uid)
   docRef.set({
+    displayName: displayName,
+    photoURL: photoURL,
     introduce: '',
     skill: [],
     location: '',
