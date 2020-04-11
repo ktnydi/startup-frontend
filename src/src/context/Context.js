@@ -246,15 +246,14 @@ class Provider extends React.Component {
   createProject = async (project, history) => {
     try {
       const {title, items, about} = project
-      const docRef = await firestore.collection('projects').add({
-        id: shortid.generate(),
-        title,
-        items,
-        about,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        founderUid: this.state.user.uid,
-      })
-      console.log(docRef)
+      await firestore.collection('users').doc(auth.currentUser.uid)
+        .collection('projects').add({
+          id: shortid.generate(),
+          title,
+          items,
+          about,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        })
       this.fadeInOutSuccessNotice('プロジェクトを作成しました。')
       history.push('/')
     } catch (error) {
