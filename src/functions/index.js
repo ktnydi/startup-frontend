@@ -17,3 +17,12 @@ exports.deleteProfile = functions.auth.user().onDelete(user => {
   let docRef = admin.firestore().collection('users').doc(uid)
   docRef.delete();
 })
+
+exports.createProject = functions.firestore.document('users/{userId}/projects/{projectId}').onCreate((snapshot, context) => {
+  const userId = context.params.userId;
+  const projectId = snapshot.id;
+  const data = snapshot.data();
+  data.userRef = admin.firestore().collection('users').doc(userId);
+
+  admin.firestore().doc(`projects/${projectId}`).set(data);
+})
