@@ -25,6 +25,13 @@ exports.deleteProfile = functions.auth.user().onDelete(user => {
   avatarFile.delete();
 })
 
+exports.updateProfile = functions.firestore.document('users/{userId}').onUpdate((change, context) => {
+  const userId = context.params.userId;
+  const newUser = change.after.data();
+
+  admin.auth().updateUser(userId, newUser);
+})
+
 exports.createProject = functions.firestore.document('users/{userId}/projects/{projectId}').onCreate((snapshot, context) => {
   const userId = context.params.userId;
   const projectId = snapshot.id;
