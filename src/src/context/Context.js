@@ -153,7 +153,7 @@ class Provider extends React.Component {
     if (snapshot.state !== 'success') { return false }
     
     const url = await avatarImageRef.getDownloadURL()
-    firestore.collection('users').doc(auth.currentUser.uid).set({
+    firestore.collection('users').doc(auth.currentUser.uid).update({
       photoURL: url,
     })
 
