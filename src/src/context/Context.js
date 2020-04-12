@@ -228,11 +228,16 @@ class Provider extends React.Component {
 
   fetchProjects = async () => {
     const querySnapshot = await firestore.collection('projects').orderBy('createdAt', 'desc').get()
-    return querySnapshot.docs.map(doc => {
-      const project = doc.data()
-      project.createdAt = project.createdAt.toDate().getTime()
-      return project
-    })
+    return Promise.all(
+      querySnapshot.docs.map(async doc => {
+        const project = doc.data()
+        project.createdAt = project.createdAt.toDate().getTime()
+
+        const userSnapshot = await project.userRef.get()
+        project.user = userSnapshot.data()
+        return project
+      })
+    )
   }
 
   fetchProject = async (id) => {
