@@ -166,9 +166,9 @@ function ProjectCell({item}) {
       </h3>
       <p className={classes.about}>{displayAbout(item.about)}</p>
       <div className={classes.relative}>
+        <img src={item.user.photoURL} width={40} className={classes.avatar} />
+        <span className={classes.author}>{item.user.displayName}</span>
         <span>{displayDuration(item.createdAt)}</span>
-        <span className={classes.author}>{item.author}</span>
-        <span>{item.pv} Views</span>
       </div>
     </div>
   )
@@ -292,6 +292,13 @@ const useStyles = makeStyles({
     margin: '20px 0 0',
     fontSize: '1.3rem',
     color: 'rgba(0, 0, 0, 0.5)',
+  },
+  avatar: {
+    display: 'inline-block',
+    width: 40,
+    height: 40,
+    borderRadius: '50%',
+    border: '1px solid #ddd',
   },
   author: {
     display: 'inline-block',
