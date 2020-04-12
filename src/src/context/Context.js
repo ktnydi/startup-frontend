@@ -245,6 +245,9 @@ class Provider extends React.Component {
     const querySnapshot = await query.get()
     const project = querySnapshot.docs.shift().data()
     project.createdAt = project.createdAt.toDate().getTime()
+
+    const userSnapshot = await project.userRef.get()
+    project.user = userSnapshot.data()
     return project
   }
 
