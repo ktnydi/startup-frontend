@@ -7,9 +7,11 @@ import Markdown from '../common/Markdown';
 import { dateTime } from '../helper/DateFormatter';
 import theme from '../asset/Theme';
 import { Connect } from '../context/Context';
+import Indicator from '../common/Indicator';
 
 function ProjectDetail({store}) {
   const [item, setItem] = React.useState('');
+  const [loading, setLoading] = React.useState(true);
   const { id } = useParams();
   const classes = useStyles();
   const props = useSpring({opacity: 1, transform: 'translateY(0)', from: {opacity: 0, transform: 'translateY(50px)'}});
@@ -18,9 +20,12 @@ function ProjectDetail({store}) {
     const fetchItem = async () => {
       const item = await store.fetchProject(id);
       setItem(item);
+      setLoading(false);
     }
     fetchItem();
   }, [])
+
+  if (loading) { return <div className={classes.loading}><Indicator size={40} /></div> }
 
   return(
     <animated.div className={classes.root} style={props}>
@@ -30,6 +35,13 @@ function ProjectDetail({store}) {
         </div>
         <div className={classes.articleContent}>
           <h2  className={classes.articleTitle}>{item.title}</h2>
+          <nav>
+            <ul className={classes.tagList}>
+              {item.items.map((tag, index) => (
+                <li key={index} className={classes.tag}># {tag}</li>
+              ))}
+            </ul>
+          </nav>
           <Markdown source={item.about} />
         </div>
         <div className={classes.submit}>
@@ -52,11 +64,30 @@ const useStyles = makeStyles({
     margin: '0 auto',
     padding: '50px 15px',
   },
+  loading: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 60,
+  },
   articleHeader: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     color: 'rgba(0, 0, 0, 0.5)',
+  },
+  tagList: {
+    display: 'flex',
+    listStyle: 'none',
+  },
+  tag: {
+    padding: '5px 10px',
+    border: '1px solid #ddd',
+    borderRadius: 3,
+    color: 'rgba(0, 0, 0, 0.75)',
+    '& + &': {
+      margin: '0 0 0 10px',
+    },
   },
   articleContent: {
     margin: '15px 0 0',
