@@ -31,6 +31,8 @@ function ProjectDetail({store}) {
     <animated.div className={classes.root} style={props}>
       <div className={classes.container}>
         <div className={classes.articleHeader}>
+          <img src={item.user.photoURL} width={40} className={classes.headerAvatar} />
+          <span className={classes.headerdisplayName}>{item.user.displayName}</span>
           <div>{dateTime(item.createdAt)}</div>
         </div>
         <div className={classes.articleContent}>
@@ -43,6 +45,15 @@ function ProjectDetail({store}) {
             </ul>
           </nav>
           <Markdown source={item.about} />
+        </div>
+        <div className={classes.userInfo}>
+          <div className={classes.userInfoContent}>
+            <img src={item.user.photoURL} width={100} className={classes.userAvatar} />
+            <div className={classes.userIntroduce}>
+              <div className={classes.displayName}>{item.user.displayName}</div>
+              <div className={classes.introduce}>{item.user.introduce || '自己紹介文はありません。'}</div>
+            </div>
+          </div>
         </div>
         <div className={classes.submit}>
           <button type='button' className={classes.post}>
@@ -73,8 +84,17 @@ const useStyles = makeStyles({
   articleHeader: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
     color: 'rgba(0, 0, 0, 0.5)',
+  },
+  headerAvatar: {
+    width: 40,
+    height: 40,
+    border: '1px solid #ddd',
+    borderRadius: '50%',
+  },
+  headerdisplayName: {
+    flex: 1,
+    margin: '0 0 0 10px',
   },
   tagList: {
     display: 'flex',
@@ -104,6 +124,39 @@ const useStyles = makeStyles({
     lineHeight: '1.7em',
     borderTop: '1px solid #ddd',
     color: 'rgba(0, 0, 0, 0.75)',
+  },
+  userInfo: {
+    margin: '50px 0',
+    padding: 20,
+    border: '1px solid #ddd',
+    borderRadius: 3,
+    color: 'rgba(0, 0, 0, 0.75)',
+  },
+  userInfoHeader: {
+    fontWeight: 'bolder',
+  },
+  userInfoContent: {
+    textAlign: 'center',
+  },
+  userAvatar: {
+    flex: 'none',
+    display: 'block-block',
+    width: 100,
+    height: 100,
+    border: '1px solid #ddd',
+    borderRadius: '50%',
+  },
+  userIntroduce: {
+    margin: '10px 0 0 0',
+    wordBreak: 'break-all',
+    lineHeight: '1.5em',
+  },
+  displayName: {
+    fontSize: '1.5rem',
+    fontWeight: 'bolder',
+  },
+  introduce: {
+    margin: '10px 0 0',
   },
   submit: {
     display: 'flex',
