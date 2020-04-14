@@ -8,10 +8,12 @@ import { dateTime } from '../helper/DateFormatter';
 import theme from '../asset/Theme';
 import { Connect } from '../context/Context';
 import Indicator from '../common/Indicator';
+import Confirm from '../component/Confirm';
 
 function ProjectDetail({store}) {
   const [item, setItem] = React.useState('');
   const [loading, setLoading] = React.useState(true);
+  const [confirm, setConfirm] = React.useState(false);
   const { id } = useParams();
   const classes = useStyles();
   const props = useSpring({opacity: 1, transform: 'translateY(0)', from: {opacity: 0, transform: 'translateY(50px)'}});
@@ -29,6 +31,7 @@ function ProjectDetail({store}) {
 
   return(
     <>
+      <Confirm confirm={confirm} setConfirm={setConfirm} />
       <animated.div className={classes.root} style={props}>
         <div className={classes.container}>
           <div className={classes.articleHeader}>
@@ -61,7 +64,7 @@ function ProjectDetail({store}) {
       <div className={classes.submit}>
         <img src={item.user.photoURL} width={50} className={classes.submitAvatar} />
         <h3 className={classes.submitTitle}>{item.title}</h3>
-        <button type='button' className={classes.post}>
+        <button type='button' className={classes.post} onClick={() => setConfirm(true)}>
           <span>応募する</span>
         </button>
       </div>

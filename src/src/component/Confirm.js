@@ -2,18 +2,21 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import theme from '../asset/Theme';
 
-const ConfirmModal = () => {
+const ConfirmModal = (props) => {
+  const {confirm, setConfirm} = props;
   const classes = useStyles();
+
+  if (!confirm) { return false }
 
   return(
     <>
-      <div className={classes.modalBg} />
+      <div className={classes.modalBg} onClick={() => setConfirm(false)} />
       <div className={classes.modalBox}>
         <h2 className={classes.title}>プロジェクトに応募しますか？</h2>
         <div className={classes.content}>
           <p className={classes.description}>プロジェクト作成者に承認されると正式に参加できます。</p>
           <div className={classes.buttonList}>
-            <button className={classes.cancel}>キャンセル</button>
+            <button className={classes.cancel} onClick={() => setConfirm(false)}>キャンセル</button>
             <button className={classes.apply}>応募</button>
           </div>
         </div>
