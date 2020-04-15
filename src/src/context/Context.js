@@ -230,6 +230,7 @@ class Provider extends React.Component {
     return Promise.all(
       querySnapshot.docs.map(async doc => {
         const project = doc.data()
+        project.id = doc.id
         project.createdAt = project.createdAt.toDate().getTime()
 
         const userSnapshot = await project.userRef.get()
