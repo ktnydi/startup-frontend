@@ -1,7 +1,6 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import { auth, firestore, storage } from '../firebase';
-import shortid from 'shortid';
 
 const AppContext = React.createContext();
 
@@ -231,6 +230,7 @@ class Provider extends React.Component {
     return Promise.all(
       querySnapshot.docs.map(async doc => {
         const project = doc.data()
+        project.id = doc.id
         project.createdAt = project.createdAt.toDate().getTime()
 
         const userSnapshot = await project.userRef.get()
@@ -241,9 +241,9 @@ class Provider extends React.Component {
   }
 
   fetchProject = async (id) => {
-    const query = firestore.collection('projects').where('id', '==', id)
-    const querySnapshot = await query.get()
-    const project = querySnapshot.docs.shift().data()
+    const projectDocRef = firestore.collection('projects').doc(id)
+    const projectSnapshot = await projectDocRef.get()
+    const project = projectSnapshot.data()
     project.createdAt = project.createdAt.toDate().getTime()
 
     const userSnapshot = await project.userRef.get()
@@ -256,7 +256,6 @@ class Provider extends React.Component {
       const {title, items, about} = project
       await firestore.collection('users').doc(auth.currentUser.uid)
         .collection('projects').add({
-          id: shortid.generate(),
           title,
           items,
           about,
