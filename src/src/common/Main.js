@@ -13,6 +13,7 @@ import EditPassword from '../component/EditPassword';
 import Project from '../component/Project';
 import ProjectDetail from '../component/ProjectDetail';
 import ProjectCreate from '../component/ProjectCreate';
+import EntryDone from '../component/EntryDone';
 import { Success, Failure } from '../common/Notice';
 import { Connect } from '../context/Context';
 
@@ -46,6 +47,7 @@ function Main(props) {
         <Route path='/projects/:id'>
           <ProjectDetail />
         </Route>
+        <Route path='/entries/:id/done' component={EntryDone} />
         <Route path='/'>
           <Project />
         </Route>
