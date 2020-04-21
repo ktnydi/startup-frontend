@@ -306,4 +306,4 @@ const Connect = (Component) => (
   )
 )
 
-export { Provider, Connect }
+export { AppContext, Provider, Connect }
