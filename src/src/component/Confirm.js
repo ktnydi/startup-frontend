@@ -1,10 +1,21 @@
 import React from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import Entry from '../model/Entry';
 import { makeStyles } from '@material-ui/core/styles';
 import theme from '../asset/Theme';
 
 const ConfirmModal = (props) => {
   const {confirm, setConfirm} = props;
+  const { id } = useParams();
+  const history = useHistory();
   const classes = useStyles();
+
+  const handleCreateEntry = async (projectId) => {
+    const docRef = await Entry.create({ projectId });
+    if (!docRef) { return; }
+
+    history.push(`/entries/${id}/done`);
+  }
 
   if (!confirm) { return false }
 
@@ -17,7 +28,7 @@ const ConfirmModal = (props) => {
           <p className={classes.description}>プロジェクト作成者に承認されると正式に参加できます。</p>
           <div className={classes.buttonList}>
             <button className={classes.cancel} onClick={() => setConfirm(false)}>キャンセル</button>
-            <button className={classes.apply}>応募</button>
+            <button className={classes.apply} onClick={() => handleCreateEntry(id)}>応募</button>
           </div>
         </div>
       </div>
